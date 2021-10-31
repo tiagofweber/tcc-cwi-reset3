@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -20,5 +21,10 @@ public class UsuarioController {
     public Usuario criarUsuario(@RequestBody @Valid Usuario usuario) {
         usuarioService.criarUsuario(usuario);
         return usuario;
+    }
+
+    @GetMapping
+    public List<Usuario> listarUsuarios() {
+        return usuarioService.listarUsuarios();
     }
 }
