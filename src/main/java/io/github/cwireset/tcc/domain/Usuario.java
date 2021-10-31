@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -38,6 +39,7 @@ public class Usuario {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_endereco")
+    @Valid
     private Endereco endereco;
 
 }
