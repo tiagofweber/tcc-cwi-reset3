@@ -5,6 +5,8 @@ import io.github.cwireset.tcc.exception.CpfDuplicadoException;
 import io.github.cwireset.tcc.exception.EmailDuplicadoException;
 import io.github.cwireset.tcc.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,7 +30,9 @@ public class UsuarioService {
         return usuarioRepository.save(usuario);
     }
 
-    public List<Usuario> listarUsuarios() {
-        return usuarioRepository.findAll();
+    public List<Usuario> listarUsuarios(Pageable pageable) {
+        Page<Usuario> usuariosPaginados = usuarioRepository.findAll(pageable);
+
+        return usuariosPaginados.getContent();
     }
 }
