@@ -35,4 +35,8 @@ public class UsuarioService {
 
         return usuariosPaginados.getContent();
     }
+
+    public Usuario buscarUsuarioPorId(Long id) {
+        return usuarioRepository.findById(id).get();
+    }
 }

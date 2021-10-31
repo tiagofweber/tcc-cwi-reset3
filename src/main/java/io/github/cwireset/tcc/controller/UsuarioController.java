@@ -13,7 +13,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/usuarios")
+@RequestMapping(path = "/usuarios")
 public class UsuarioController {
 
     @Autowired
@@ -29,5 +29,10 @@ public class UsuarioController {
     @GetMapping
     public List<Usuario> listarUsuarios(@PageableDefault(sort = "nome") @ApiIgnore Pageable pageable) {
         return usuarioService.listarUsuarios(pageable);
+    }
+
+    @GetMapping(path = "/{idUsuario}")
+    public Usuario buscarUsuarioPorId(@PathVariable("idUsuario") Long id) {
+        return usuarioService.buscarUsuarioPorId(id);
     }
 }
