@@ -1,5 +1,6 @@
 package io.github.cwireset.tcc.domain;
 
+import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 
 import javax.persistence.*;
@@ -21,6 +22,7 @@ public class Usuario {
 
     private String email;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String senha;
 
     private String cpf;
