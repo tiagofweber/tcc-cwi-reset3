@@ -3,6 +3,7 @@ package io.github.cwireset.tcc.service;
 import io.github.cwireset.tcc.domain.Usuario;
 import io.github.cwireset.tcc.exception.CpfDuplicadoException;
 import io.github.cwireset.tcc.exception.EmailDuplicadoException;
+import io.github.cwireset.tcc.exception.IdNaoEncontradoException;
 import io.github.cwireset.tcc.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -37,6 +38,11 @@ public class UsuarioService {
     }
 
     public Usuario buscarUsuarioPorId(Long id) {
+        boolean idExists = usuarioRepository.existsById(id);
+
+        if (!idExists)
+            throw new IdNaoEncontradoException(id);
+
         return usuarioRepository.findById(id).get();
     }
 }
