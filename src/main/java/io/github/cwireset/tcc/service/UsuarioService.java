@@ -45,4 +45,8 @@ public class UsuarioService {
 
         return usuarioRepository.findById(id).get();
     }
+
+    public Usuario buscarUsuarioPorCpf(String cpf) {
+        return usuarioRepository.findByCpf(cpf);
+    }
 }

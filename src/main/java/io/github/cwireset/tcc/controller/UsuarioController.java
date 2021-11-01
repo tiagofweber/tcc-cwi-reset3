@@ -34,4 +34,9 @@ public class UsuarioController {
     public Usuario buscarUsuarioPorId(@PathVariable("idUsuario") Long id) {
         return usuarioService.buscarUsuarioPorId(id);
     }
+
+    @GetMapping(path = "/cpf/{cpf}")
+    public Usuario buscarUsuarioPorCpf(@PathVariable("cpf") String cpf) {
+        return usuarioService.buscarUsuarioPorCpf(cpf);
+    }
 }
