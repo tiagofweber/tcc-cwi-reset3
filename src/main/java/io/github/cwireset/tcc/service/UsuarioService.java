@@ -6,6 +6,7 @@ import io.github.cwireset.tcc.exception.CpfNaoEncontradoException;
 import io.github.cwireset.tcc.exception.EmailDuplicadoException;
 import io.github.cwireset.tcc.exception.IdNaoEncontradoException;
 import io.github.cwireset.tcc.repository.UsuarioRepository;
+import io.github.cwireset.tcc.request.AtualizarUsuarioRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -54,5 +55,17 @@ public class UsuarioService {
             throw new CpfNaoEncontradoException(cpf);
 
         return usuarioRepository.findByCpf(cpf);
+    }
+
+    public Usuario atualizarUsuario(Long id, AtualizarUsuarioRequest usuarioRequest) {
+        Usuario usuario = buscarUsuarioPorId(id);
+
+        usuario.setNome(usuarioRequest.getNome());
+        usuario.setEmail(usuarioRequest.getEmail());
+        usuario.setSenha(usuarioRequest.getSenha());
+        usuario.setDataNascimento(usuarioRequest.getDataNascimento());
+        usuario.setEndereco(usuarioRequest.getEndereco());
+
+        return usuarioRepository.save(usuario);
     }
 }

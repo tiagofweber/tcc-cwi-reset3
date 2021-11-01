@@ -1,6 +1,7 @@
 package io.github.cwireset.tcc.controller;
 
 import io.github.cwireset.tcc.domain.Usuario;
+import io.github.cwireset.tcc.request.AtualizarUsuarioRequest;
 import io.github.cwireset.tcc.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -38,5 +39,13 @@ public class UsuarioController {
     @GetMapping(path = "/cpf/{cpf}")
     public Usuario buscarUsuarioPorCpf(@PathVariable("cpf") String cpf) {
         return usuarioService.buscarUsuarioPorCpf(cpf);
+    }
+
+    @PutMapping(path = "/{id}")
+    public Usuario atualizarUsuario(
+            @PathVariable Long id,
+            @RequestBody AtualizarUsuarioRequest usuarioRequest
+    ) {
+        return usuarioService.atualizarUsuario(id, usuarioRequest);
     }
 }
