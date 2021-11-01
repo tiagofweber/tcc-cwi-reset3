@@ -2,6 +2,7 @@ package io.github.cwireset.tcc.service;
 
 import io.github.cwireset.tcc.domain.Usuario;
 import io.github.cwireset.tcc.exception.CpfDuplicadoException;
+import io.github.cwireset.tcc.exception.CpfNaoEncontradoException;
 import io.github.cwireset.tcc.exception.EmailDuplicadoException;
 import io.github.cwireset.tcc.exception.IdNaoEncontradoException;
 import io.github.cwireset.tcc.repository.UsuarioRepository;
@@ -47,6 +48,11 @@ public class UsuarioService {
     }
 
     public Usuario buscarUsuarioPorCpf(String cpf) {
+        boolean cpfExists = usuarioRepository.existsByCpf(cpf);
+
+        if (!cpfExists)
+            throw new CpfNaoEncontradoException(cpf);
+
         return usuarioRepository.findByCpf(cpf);
     }
 }
