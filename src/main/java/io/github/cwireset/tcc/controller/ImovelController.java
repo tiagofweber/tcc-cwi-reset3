@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/imoveis")
@@ -20,5 +21,10 @@ public class ImovelController {
     @ResponseStatus(HttpStatus.CREATED)
     public Imovel cadastrarImovel(@RequestBody @Valid CadastrarImovelRequest imovelRequest) {
         return imovelService.cadastrarImovel(imovelRequest);
+    }
+
+    @GetMapping
+    public List<Imovel> listarImoveis() {
+        return imovelService.listarImoveis();
     }
 }
