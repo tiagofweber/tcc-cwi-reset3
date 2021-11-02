@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AnuncioRepository extends JpaRepository<Anuncio, Long> {
+    boolean existsByImovelId(Long idImovel);
 }

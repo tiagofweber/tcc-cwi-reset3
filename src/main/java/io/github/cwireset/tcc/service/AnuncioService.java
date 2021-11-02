@@ -3,6 +3,7 @@ package io.github.cwireset.tcc.service;
 import io.github.cwireset.tcc.domain.Anuncio;
 import io.github.cwireset.tcc.domain.Imovel;
 import io.github.cwireset.tcc.domain.Usuario;
+import io.github.cwireset.tcc.exception.imovel.ImovelJaAnunciadoException;
 import io.github.cwireset.tcc.repository.AnuncioRepository;
 import io.github.cwireset.tcc.request.CadastrarAnuncioRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,11 @@ public class AnuncioService {
     private ImovelService imovelService;
 
     public Anuncio cadastrarAnuncio(CadastrarAnuncioRequest anuncioRequest) {
+        boolean anuncioImovelExists = anuncioRepository.existsByImovelId(anuncioRequest.getIdImovel());
+
+        if (anuncioImovelExists)
+            throw new ImovelJaAnunciadoException(anuncioRequest.getIdImovel());
+
         Imovel imovel = imovelService.buscarImovelPorId(anuncioRequest.getIdImovel());
         Usuario anunciante = usuarioService.buscarUsuarioPorId(anuncioRequest.getIdAnunciante());
 
