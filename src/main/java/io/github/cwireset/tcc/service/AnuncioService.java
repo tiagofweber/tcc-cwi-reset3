@@ -49,4 +49,8 @@ public class AnuncioService {
 
         return anunciosPaginados.getContent();
     }
+
+    public List<Anuncio> listarAnunciosPorAnunciante(Long idAnunciante) {
+        return anuncioRepository.findAllByAnuncianteId(idAnunciante);
+    }
 }

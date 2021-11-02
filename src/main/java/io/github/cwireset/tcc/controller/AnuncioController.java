@@ -30,4 +30,9 @@ public class AnuncioController {
     public List<Anuncio> listarAnuncios(@PageableDefault(sort = "valorDiaria") @ApiIgnore Pageable pageable) {
         return anuncioService.listarAnuncios(pageable);
     }
+
+    @GetMapping(path = "/anunciantes/{idAnunciante}")
+    public List<Anuncio> listarAnunciosPorAnunciante(@PathVariable("idAnunciante") Long idAnunciante) {
+        return anuncioService.listarAnunciosPorAnunciante(idAnunciante);
+    }
 }
