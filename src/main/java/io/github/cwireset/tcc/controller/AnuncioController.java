@@ -4,8 +4,11 @@ import io.github.cwireset.tcc.domain.Anuncio;
 import io.github.cwireset.tcc.request.CadastrarAnuncioRequest;
 import io.github.cwireset.tcc.service.AnuncioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -24,7 +27,7 @@ public class AnuncioController {
     }
 
     @GetMapping
-    public List<Anuncio> listarAnuncios() {
-        return anuncioService.listarAnuncios();
+    public List<Anuncio> listarAnuncios(@PageableDefault(sort = "valorDiaria") @ApiIgnore Pageable pageable) {
+        return anuncioService.listarAnuncios(pageable);
     }
 }

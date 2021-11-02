@@ -7,6 +7,8 @@ import io.github.cwireset.tcc.exception.imovel.ImovelJaAnunciadoException;
 import io.github.cwireset.tcc.repository.AnuncioRepository;
 import io.github.cwireset.tcc.request.CadastrarAnuncioRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -42,7 +44,9 @@ public class AnuncioService {
         return anuncioRepository.save(anuncio);
     }
 
-    public List<Anuncio> listarAnuncios() {
-        return anuncioRepository.findAll();
+    public List<Anuncio> listarAnuncios(Pageable pageable) {
+        Page<Anuncio> anunciosPaginados = anuncioRepository.findAll(pageable);
+
+        return anunciosPaginados.getContent();
     }
 }
