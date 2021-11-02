@@ -38,4 +38,8 @@ public class ImovelService {
 
         return imoveisPaginados.getContent();
     }
+
+    public List<Imovel> listarImoveisPorProprietario(Long idProprietario) {
+        return imovelRepository.findAllByProprietarioId(idProprietario);
+    }
 }

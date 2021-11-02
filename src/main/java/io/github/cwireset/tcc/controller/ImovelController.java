@@ -30,4 +30,9 @@ public class ImovelController {
     public List<Imovel> listarImoveis(@PageableDefault(sort = "identificacao") @ApiIgnore Pageable pageable) {
         return imovelService.listarImoveis(pageable);
     }
+
+    @GetMapping(path = "/proprietarios/{idProprietario}")
+    public List<Imovel> listarImoveisPorProprietario(@PathVariable Long idProprietario) {
+        return imovelService.listarImoveisPorProprietario(idProprietario);
+    }
 }
