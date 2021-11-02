@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping(path = "/imoveis")
 public class ImovelController {
@@ -16,7 +18,7 @@ public class ImovelController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Imovel cadastrarImovel(@RequestBody CadastrarImovelRequest imovelRequest) {
+    public Imovel cadastrarImovel(@RequestBody @Valid CadastrarImovelRequest imovelRequest) {
         return imovelService.cadastrarImovel(imovelRequest);
     }
 }
