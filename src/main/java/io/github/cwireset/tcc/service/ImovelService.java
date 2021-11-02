@@ -5,6 +5,8 @@ import io.github.cwireset.tcc.domain.Usuario;
 import io.github.cwireset.tcc.repository.ImovelRepository;
 import io.github.cwireset.tcc.request.CadastrarImovelRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,7 +33,9 @@ public class ImovelService {
         return imovelRepository.save(imovel);
     }
 
-    public List<Imovel> listarImoveis() {
-        return imovelRepository.findAll();
+    public List<Imovel> listarImoveis(Pageable pageable) {
+        Page<Imovel> imoveisPaginados = imovelRepository.findAll(pageable);
+
+        return imoveisPaginados.getContent();
     }
 }

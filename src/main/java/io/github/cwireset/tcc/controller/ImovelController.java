@@ -4,8 +4,11 @@ import io.github.cwireset.tcc.domain.Imovel;
 import io.github.cwireset.tcc.request.CadastrarImovelRequest;
 import io.github.cwireset.tcc.service.ImovelService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -24,7 +27,7 @@ public class ImovelController {
     }
 
     @GetMapping
-    public List<Imovel> listarImoveis() {
-        return imovelService.listarImoveis();
+    public List<Imovel> listarImoveis(@PageableDefault(sort = "identificacao") @ApiIgnore Pageable pageable) {
+        return imovelService.listarImoveis(pageable);
     }
 }
