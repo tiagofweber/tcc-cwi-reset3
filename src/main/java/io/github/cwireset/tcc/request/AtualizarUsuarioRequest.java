@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Getter
@@ -12,10 +15,15 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class AtualizarUsuarioRequest {
 
+    @NotBlank(message = "Campo obrigatório não informado. Por favor, informe o campo nome.")
     private String nome;
+    @NotBlank(message = "Campo obrigatório não informado. Por favor, informe o campo email.")
     private String email;
+    @NotBlank(message = "Campo obrigatório não informado. Por favor, informe o campo senha.")
     private String senha;
+    @NotNull(message = "Campo obrigatório não informado. Por favor, informe o campo data de nascimento.")
     private LocalDate dataNascimento;
+    @Valid
     Endereco endereco;
 
 }
