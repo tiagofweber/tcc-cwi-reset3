@@ -8,9 +8,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor
 public class Imovel {
 
     @Id
@@ -33,5 +31,13 @@ public class Imovel {
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "id_imovel")
     private List<CaracteristicaImovel> caracteristicas;
+
+    public Imovel(String identificacao, TipoImovel tipoImovel, Endereco endereco, Usuario proprietario, List<CaracteristicaImovel> caracteristicas) {
+        this.identificacao = identificacao;
+        this.tipoImovel = tipoImovel;
+        this.endereco = endereco;
+        this.proprietario = proprietario;
+        this.caracteristicas = caracteristicas;
+    }
 
 }
