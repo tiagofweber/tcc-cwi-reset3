@@ -10,8 +10,6 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
 public class Anuncio {
 
@@ -38,4 +36,19 @@ public class Anuncio {
 
     private String descricao;
 
+    public Anuncio(
+            TipoAnuncio tipoAnuncio,
+            Imovel imovel,
+            Usuario anunciante,
+            BigDecimal valorDiaria,
+            List<FormaPagamento> formasAceitas,
+            String descricao
+    ) {
+        this.tipoAnuncio = tipoAnuncio;
+        this.imovel = imovel;
+        this.anunciante = anunciante;
+        this.valorDiaria = valorDiaria;
+        this.formasAceitas = formasAceitas;
+        this.descricao = descricao;
+    }
 }
