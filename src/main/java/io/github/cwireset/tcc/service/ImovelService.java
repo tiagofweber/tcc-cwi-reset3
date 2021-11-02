@@ -44,4 +44,8 @@ public class ImovelService {
 
         return imoveisPaginados.getContent();
     }
+
+    public Imovel buscarImovelPorId(Long id) {
+        return imovelRepository.findById(id).get();
+    }
 }

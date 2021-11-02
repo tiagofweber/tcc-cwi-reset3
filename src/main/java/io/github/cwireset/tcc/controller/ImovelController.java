@@ -40,4 +40,9 @@ public class ImovelController {
     ) {
         return imovelService.listarImoveisPorProprietario(idProprietario, pageable);
     }
+
+    @GetMapping(path = "/{idImovel}")
+    public Imovel buscarImovelPorId(@PathVariable("idImovel") Long id) {
+        return imovelService.buscarImovelPorId(id);
+    }
 }
