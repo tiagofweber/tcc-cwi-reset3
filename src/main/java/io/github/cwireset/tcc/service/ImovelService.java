@@ -54,4 +54,10 @@ public class ImovelService {
 
         return imovelRepository.findById(id).get();
     }
+
+    public void removerImovel(Long id) {
+        Imovel imovel = buscarImovelPorId(id);
+
+        imovelRepository.delete(imovel);
+    }
 }

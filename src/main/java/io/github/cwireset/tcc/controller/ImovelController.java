@@ -45,4 +45,9 @@ public class ImovelController {
     public Imovel buscarImovelPorId(@PathVariable("idImovel") Long id) {
         return imovelService.buscarImovelPorId(id);
     }
+
+    @DeleteMapping(path = "/{idImovel}")
+    public void removerImovel(@PathVariable("idImovel") Long id) {
+        imovelService.removerImovel(id);
+    }
 }
