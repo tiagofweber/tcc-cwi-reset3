@@ -21,11 +21,9 @@ public class UsuarioService {
     private UsuarioRepository usuarioRepository;
 
     public Usuario criarUsuario(Usuario usuario) {
-        boolean emailExists = usuarioRepository.existsByEmail(usuario.getEmail());
         boolean cpfExists = usuarioRepository.existsByCpf(usuario.getCpf());
 
-        if (emailExists)
-            throw new EmailDuplicadoException(usuario.getEmail());
+        validarEmail(usuario.getEmail());
 
         if (cpfExists)
             throw new CpfDuplicadoException(usuario.getCpf());
@@ -58,6 +56,8 @@ public class UsuarioService {
     }
 
     public Usuario atualizarUsuario(Long id, AtualizarUsuarioRequest usuarioRequest) {
+        validarEmail(usuarioRequest.getEmail());
+
         Usuario usuario = buscarUsuarioPorId(id);
 
         usuario.setNome(usuarioRequest.getNome());
@@ -67,5 +67,12 @@ public class UsuarioService {
         usuario.setEndereco(usuarioRequest.getEndereco());
 
         return usuarioRepository.save(usuario);
+    }
+
+    private void validarEmail(String email) {
+        boolean emailExists = usuarioRepository.existsByEmail(email);
+
+        if (emailExists)
+            throw new EmailDuplicadoException(email);
     }
 }
