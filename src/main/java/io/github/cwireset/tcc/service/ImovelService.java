@@ -39,7 +39,9 @@ public class ImovelService {
         return imoveisPaginados.getContent();
     }
 
-    public List<Imovel> listarImoveisPorProprietario(Long idProprietario) {
-        return imovelRepository.findAllByProprietarioId(idProprietario);
+    public List<Imovel> listarImoveisPorProprietario(Long idProprietario, Pageable pageable) {
+        Page<Imovel> imoveisPaginados = imovelRepository.findAllByProprietarioId(idProprietario, pageable);
+
+        return imoveisPaginados.getContent();
     }
 }
