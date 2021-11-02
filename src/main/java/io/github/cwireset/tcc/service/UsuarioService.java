@@ -1,10 +1,10 @@
 package io.github.cwireset.tcc.service;
 
 import io.github.cwireset.tcc.domain.Usuario;
-import io.github.cwireset.tcc.exception.CpfDuplicadoException;
-import io.github.cwireset.tcc.exception.CpfNaoEncontradoException;
-import io.github.cwireset.tcc.exception.EmailDuplicadoException;
-import io.github.cwireset.tcc.exception.IdNaoEncontradoException;
+import io.github.cwireset.tcc.exception.usuario.CpfDuplicadoException;
+import io.github.cwireset.tcc.exception.usuario.CpfNaoEncontradoException;
+import io.github.cwireset.tcc.exception.usuario.EmailDuplicadoException;
+import io.github.cwireset.tcc.exception.usuario.IdUsuarioNaoEncontradoException;
 import io.github.cwireset.tcc.repository.UsuarioRepository;
 import io.github.cwireset.tcc.request.AtualizarUsuarioRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +41,7 @@ public class UsuarioService {
         boolean idExists = usuarioRepository.existsById(id);
 
         if (!idExists)
-            throw new IdNaoEncontradoException(id);
+            throw new IdUsuarioNaoEncontradoException(id);
 
         return usuarioRepository.findById(id).get();
     }

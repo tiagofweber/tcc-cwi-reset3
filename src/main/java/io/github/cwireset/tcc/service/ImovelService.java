@@ -2,6 +2,7 @@ package io.github.cwireset.tcc.service;
 
 import io.github.cwireset.tcc.domain.Imovel;
 import io.github.cwireset.tcc.domain.Usuario;
+import io.github.cwireset.tcc.exception.imovel.IdImovelNaoEncontradoException;
 import io.github.cwireset.tcc.repository.ImovelRepository;
 import io.github.cwireset.tcc.request.CadastrarImovelRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,11 @@ public class ImovelService {
     }
 
     public Imovel buscarImovelPorId(Long id) {
+        boolean idExists = imovelRepository.existsById(id);
+
+        if (!idExists)
+            throw new IdImovelNaoEncontradoException(id);
+
         return imovelRepository.findById(id).get();
     }
 }
