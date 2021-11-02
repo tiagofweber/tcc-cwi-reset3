@@ -50,7 +50,9 @@ public class AnuncioService {
         return anunciosPaginados.getContent();
     }
 
-    public List<Anuncio> listarAnunciosPorAnunciante(Long idAnunciante) {
-        return anuncioRepository.findAllByAnuncianteId(idAnunciante);
+    public List<Anuncio> listarAnunciosPorAnunciante(Long idAnunciante, Pageable pageable) {
+        Page<Anuncio> anunciosPaginados = anuncioRepository.findAllByAnuncianteId(idAnunciante, pageable);
+
+        return anunciosPaginados.getContent();
     }
 }
