@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -19,6 +20,7 @@ public class CadastrarImovelRequest {
     @NotNull(message = "Campo obrigatório não informado. Por favor, informe o campo tipo imóvel.")
     private TipoImovel tipoImovel;
     @NotNull(message = "Campo obrigatório não informado. Por favor, informe o campo endereço.")
+    @Valid
     private Endereco endereco;
     @NotBlank(message = "Campo obrigatório não informado. Por favor, informe o campo identificação.")
     private String identificacao;
