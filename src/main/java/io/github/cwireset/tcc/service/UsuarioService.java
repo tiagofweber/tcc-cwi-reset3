@@ -56,9 +56,10 @@ public class UsuarioService {
     }
 
     public Usuario atualizarUsuario(Long id, AtualizarUsuarioRequest usuarioRequest) {
-        validarEmail(usuarioRequest.getEmail());
-
         Usuario usuario = buscarUsuarioPorId(id);
+
+        if (!usuario.getEmail().equals(usuarioRequest.getEmail()))
+            validarEmail(usuarioRequest.getEmail());
 
         usuario.setNome(usuarioRequest.getNome());
         usuario.setEmail(usuarioRequest.getEmail());
