@@ -36,13 +36,16 @@ public class Anuncio {
 
     private String descricao;
 
+    private Boolean ativo;
+
     public Anuncio(
             TipoAnuncio tipoAnuncio,
             Imovel imovel,
             Usuario anunciante,
             BigDecimal valorDiaria,
             List<FormaPagamento> formasAceitas,
-            String descricao
+            String descricao,
+            Boolean ativo
     ) {
         this.tipoAnuncio = tipoAnuncio;
         this.imovel = imovel;
@@ -50,5 +53,6 @@ public class Anuncio {
         this.valorDiaria = valorDiaria;
         this.formasAceitas = formasAceitas;
         this.descricao = descricao;
+        this.ativo = ativo;
     }
 }

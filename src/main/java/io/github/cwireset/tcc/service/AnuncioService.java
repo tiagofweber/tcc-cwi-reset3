@@ -3,6 +3,7 @@ package io.github.cwireset.tcc.service;
 import io.github.cwireset.tcc.domain.Anuncio;
 import io.github.cwireset.tcc.domain.Imovel;
 import io.github.cwireset.tcc.domain.Usuario;
+import io.github.cwireset.tcc.exception.anuncio.IdAnuncioNaoEncontradoException;
 import io.github.cwireset.tcc.exception.imovel.ImovelJaAnunciadoException;
 import io.github.cwireset.tcc.repository.AnuncioRepository;
 import io.github.cwireset.tcc.request.CadastrarAnuncioRequest;
@@ -38,21 +39,34 @@ public class AnuncioService {
                 anunciante,
                 anuncioRequest.getValorDiaria(),
                 anuncioRequest.getFormasAceitas(),
-                anuncioRequest.getDescricao()
+                anuncioRequest.getDescricao(),
+                true
         );
 
         return anuncioRepository.save(anuncio);
     }
 
     public List<Anuncio> listarAnuncios(Pageable pageable) {
-        Page<Anuncio> anunciosPaginados = anuncioRepository.findAll(pageable);
+        Page<Anuncio> anunciosPaginados = anuncioRepository.findAllByAtivoTrue(pageable);
 
         return anunciosPaginados.getContent();
     }
 
     public List<Anuncio> listarAnunciosPorAnunciante(Long idAnunciante, Pageable pageable) {
-        Page<Anuncio> anunciosPaginados = anuncioRepository.findAllByAnuncianteId(idAnunciante, pageable);
+        Page<Anuncio> anunciosPaginados = anuncioRepository.findAllByAnuncianteIdAndAtivoTrue(idAnunciante, pageable);
 
         return anunciosPaginados.getContent();
+    }
+
+    public void removerAnuncio(Long id) {
+        boolean anuncioExists = anuncioRepository.existsById(id);
+
+        if (!anuncioExists)
+            throw new IdAnuncioNaoEncontradoException(id);
+
+        Anuncio anuncio = anuncioRepository.findById(id).get();
+
+        anuncio.setAtivo(false);
+        anuncioRepository.save(anuncio);
     }
 }

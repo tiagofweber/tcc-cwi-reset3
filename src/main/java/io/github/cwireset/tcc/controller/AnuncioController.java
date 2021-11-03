@@ -38,4 +38,9 @@ public class AnuncioController {
     ) {
         return anuncioService.listarAnunciosPorAnunciante(idAnunciante, pageable);
     }
+
+    @DeleteMapping(path = "/{idAnuncio}")
+    public void removerAnuncio(@PathVariable("idAnuncio") Long id) {
+        anuncioService.removerAnuncio(id);
+    }
 }
