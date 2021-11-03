@@ -1,7 +1,9 @@
 package io.github.cwireset.tcc.service;
 
+import io.github.cwireset.tcc.domain.Anuncio;
 import io.github.cwireset.tcc.domain.Imovel;
 import io.github.cwireset.tcc.domain.Usuario;
+import io.github.cwireset.tcc.exception.imovel.ExcluirImovelAnunciadoException;
 import io.github.cwireset.tcc.exception.imovel.IdImovelNaoEncontradoException;
 import io.github.cwireset.tcc.repository.ImovelRepository;
 import io.github.cwireset.tcc.request.CadastrarImovelRequest;
@@ -19,6 +21,8 @@ public class ImovelService {
     private ImovelRepository imovelRepository;
     @Autowired
     private UsuarioService usuarioService;
+    @Autowired
+    private AnuncioService anuncioService;
 
     public Imovel cadastrarImovel(CadastrarImovelRequest imovelRequest) {
         Usuario proprietario = usuarioService.buscarUsuarioPorId(imovelRequest.getIdProprietario());
@@ -57,6 +61,10 @@ public class ImovelService {
 
     public void removerImovel(Long id) {
         Imovel imovel = buscarImovelPorId(id);
+        Boolean anuncioExiste = anuncioService.existeAnuncioDeImovel(imovel);
+
+        if (anuncioExiste)
+            throw new ExcluirImovelAnunciadoException();
 
         imovelRepository.delete(imovel);
     }

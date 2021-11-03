@@ -69,4 +69,8 @@ public class AnuncioService {
         anuncio.setAtivo(false);
         anuncioRepository.save(anuncio);
     }
+
+    public Boolean existeAnuncioDeImovel(Imovel imovel) {
+        return anuncioRepository.existsByImovelId(imovel.getId());
+    }
 }
