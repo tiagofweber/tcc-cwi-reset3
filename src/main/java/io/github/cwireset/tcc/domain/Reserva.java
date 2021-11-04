@@ -37,12 +37,20 @@ public class Reserva {
     @Embedded
     private Pagamento pagamento;
 
-    public Reserva(Usuario solicitante, Anuncio anuncio, Periodo periodo, Integer quantidadePessoas, LocalDateTime dataHoraReserva) {
+    public Reserva(
+            Usuario solicitante,
+            Anuncio anuncio,
+            Periodo periodo,
+            Integer quantidadePessoas,
+            LocalDateTime dataHoraReserva,
+            Pagamento pagamento
+    ) {
         this.solicitante = solicitante;
         this.anuncio = anuncio;
         this.periodo = periodo;
         this.quantidadePessoas = quantidadePessoas;
         this.dataHoraReserva = dataHoraReserva;
+        this.pagamento = pagamento;
     }
 
 }

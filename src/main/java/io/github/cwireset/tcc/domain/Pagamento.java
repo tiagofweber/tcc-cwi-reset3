@@ -21,4 +21,8 @@ public class Pagamento {
     @Enumerated(EnumType.STRING)
     private StatusPagamento status;
 
+    public Pagamento(BigDecimal valorTotal, StatusPagamento status) {
+        this.valorTotal = valorTotal;
+        this.status = status;
+    }
 }
