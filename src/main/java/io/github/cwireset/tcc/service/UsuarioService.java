@@ -7,6 +7,7 @@ import io.github.cwireset.tcc.exception.usuario.EmailDuplicadoException;
 import io.github.cwireset.tcc.exception.usuario.IdUsuarioNaoEncontradoException;
 import io.github.cwireset.tcc.repository.UsuarioRepository;
 import io.github.cwireset.tcc.request.AtualizarUsuarioRequest;
+import io.github.cwireset.tcc.response.DadosSolicitanteResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -75,5 +76,10 @@ public class UsuarioService {
 
         if (emailExists)
             throw new EmailDuplicadoException(email);
+    }
+
+    public DadosSolicitanteResponse criarSolicitanteResponse(Long idSolicitante) {
+        Usuario usuario = buscarUsuarioPorId(idSolicitante);
+        return new DadosSolicitanteResponse(idSolicitante, usuario.getNome());
     }
 }

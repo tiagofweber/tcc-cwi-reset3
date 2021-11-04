@@ -7,6 +7,7 @@ import io.github.cwireset.tcc.exception.anuncio.IdAnuncioNaoEncontradoException;
 import io.github.cwireset.tcc.exception.imovel.ImovelJaAnunciadoException;
 import io.github.cwireset.tcc.repository.AnuncioRepository;
 import io.github.cwireset.tcc.request.CadastrarAnuncioRequest;
+import io.github.cwireset.tcc.response.DadosAnuncioResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -72,5 +73,23 @@ public class AnuncioService {
 
     public Boolean existeAnuncioDeImovel(Imovel imovel) {
         return anuncioRepository.existsByImovelId(imovel.getId());
+    }
+
+    public Anuncio buscarAnuncioPorId(Long idAnuncio) {
+        return anuncioRepository.findById(idAnuncio).get();
+    }
+
+    public DadosAnuncioResponse criarAnuncioResponse(Long idAnuncio) {
+        Anuncio anuncio = buscarAnuncioPorId(idAnuncio);
+        Imovel imovel = imovelService.buscarImovelPorId(anuncio.getImovel().getId());
+        Usuario anunciante = usuarioService.buscarUsuarioPorId(anuncio.getAnunciante().getId());
+
+        return new DadosAnuncioResponse(
+                idAnuncio,
+                imovel,
+                anunciante,
+                anuncio.getFormasAceitas(),
+                anuncio.getDescricao()
+        );
     }
 }
