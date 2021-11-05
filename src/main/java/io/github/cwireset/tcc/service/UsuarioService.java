@@ -13,8 +13,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class UsuarioService {
 
@@ -32,10 +30,8 @@ public class UsuarioService {
         return usuarioRepository.save(usuario);
     }
 
-    public List<Usuario> listarUsuarios(Pageable pageable) {
-        Page<Usuario> usuariosPaginados = usuarioRepository.findAll(pageable);
-
-        return usuariosPaginados.getContent();
+    public Page<Usuario> listarUsuarios(Pageable pageable) {
+        return usuarioRepository.findAll(pageable);
     }
 
     public Usuario buscarUsuarioPorId(Long id) {
