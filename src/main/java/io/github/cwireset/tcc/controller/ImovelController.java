@@ -4,6 +4,7 @@ import io.github.cwireset.tcc.domain.Imovel;
 import io.github.cwireset.tcc.request.CadastrarImovelRequest;
 import io.github.cwireset.tcc.service.ImovelService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -27,14 +28,14 @@ public class ImovelController {
     }
 
     @GetMapping
-    public List<Imovel> listarImoveis(
+    public Page<Imovel> listarImoveis(
             @PageableDefault(sort = "identificacao") @ApiIgnore Pageable pageable
     ) {
         return imovelService.listarImoveis(pageable);
     }
 
     @GetMapping(path = "/proprietarios/{idProprietario}")
-    public List<Imovel> listarImoveisPorProprietario(
+    public Page<Imovel> listarImoveisPorProprietario(
             @PathVariable Long idProprietario,
             @PageableDefault(sort = "identificacao") @ApiIgnore Pageable pageable
     ) {

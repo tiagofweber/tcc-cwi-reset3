@@ -38,16 +38,12 @@ public class ImovelService {
         return imovelRepository.save(imovel);
     }
 
-    public List<Imovel> listarImoveis(Pageable pageable) {
-        Page<Imovel> imoveisPaginados = imovelRepository.findAll(pageable);
-
-        return imoveisPaginados.getContent();
+    public Page<Imovel> listarImoveis(Pageable pageable) {
+        return imovelRepository.findAll(pageable);
     }
 
-    public List<Imovel> listarImoveisPorProprietario(Long idProprietario, Pageable pageable) {
-        Page<Imovel> imoveisPaginados = imovelRepository.findAllByProprietarioId(idProprietario, pageable);
-
-        return imoveisPaginados.getContent();
+    public Page<Imovel> listarImoveisPorProprietario(Long idProprietario, Pageable pageable) {
+        return imovelRepository.findAllByProprietarioId(idProprietario, pageable);
     }
 
     public Imovel buscarImovelPorId(Long id) {
