@@ -47,16 +47,12 @@ public class AnuncioService {
         return anuncioRepository.save(anuncio);
     }
 
-    public List<Anuncio> listarAnuncios(Pageable pageable) {
-        Page<Anuncio> anunciosPaginados = anuncioRepository.findAllByAtivoTrue(pageable);
-
-        return anunciosPaginados.getContent();
+    public Page<Anuncio> listarAnuncios(Pageable pageable) {
+        return anuncioRepository.findAllByAtivoTrue(pageable);
     }
 
-    public List<Anuncio> listarAnunciosPorAnunciante(Long idAnunciante, Pageable pageable) {
-        Page<Anuncio> anunciosPaginados = anuncioRepository.findAllByAnuncianteIdAndAtivoTrue(idAnunciante, pageable);
-
-        return anunciosPaginados.getContent();
+    public Page<Anuncio> listarAnunciosPorAnunciante(Long idAnunciante, Pageable pageable) {
+        return anuncioRepository.findAllByAnuncianteIdAndAtivoTrue(idAnunciante, pageable);
     }
 
     public void removerAnuncio(Long id) {

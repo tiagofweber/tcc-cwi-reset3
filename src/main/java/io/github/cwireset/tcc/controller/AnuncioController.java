@@ -4,6 +4,7 @@ import io.github.cwireset.tcc.domain.Anuncio;
 import io.github.cwireset.tcc.request.CadastrarAnuncioRequest;
 import io.github.cwireset.tcc.service.AnuncioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -27,12 +28,12 @@ public class AnuncioController {
     }
 
     @GetMapping
-    public List<Anuncio> listarAnuncios(@PageableDefault(sort = "valorDiaria") @ApiIgnore Pageable pageable) {
+    public Page<Anuncio> listarAnuncios(@PageableDefault(sort = "valorDiaria") @ApiIgnore Pageable pageable) {
         return anuncioService.listarAnuncios(pageable);
     }
 
     @GetMapping(path = "/anunciantes/{idAnunciante}")
-    public List<Anuncio> listarAnunciosPorAnunciante(
+    public Page<Anuncio> listarAnunciosPorAnunciante(
             @PathVariable("idAnunciante") Long idAnunciante,
             @PageableDefault(sort = "valorDiaria") @ApiIgnore Pageable pageable
     ) {
