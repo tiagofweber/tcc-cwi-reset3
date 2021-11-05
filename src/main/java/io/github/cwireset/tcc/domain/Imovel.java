@@ -3,12 +3,15 @@ package io.github.cwireset.tcc.domain;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Imovel {
 
     @Id
@@ -20,6 +23,7 @@ public class Imovel {
     @Enumerated(EnumType.STRING)
     private TipoImovel tipoImovel;
 
+    @NotNull(message = "Campo obrigatório não informado. Por favor, informe o campo endereço.")
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_endereco")
     private Endereco endereco;
