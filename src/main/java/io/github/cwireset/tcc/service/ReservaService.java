@@ -1,6 +1,7 @@
 package io.github.cwireset.tcc.service;
 
 import io.github.cwireset.tcc.domain.*;
+import io.github.cwireset.tcc.exception.reserva.DataInvalidaException;
 import io.github.cwireset.tcc.repository.ReservaRepository;
 import io.github.cwireset.tcc.request.CadastrarReservaRequest;
 import io.github.cwireset.tcc.response.DadosAnuncioResponse;
@@ -33,6 +34,9 @@ public class ReservaService {
 
         LocalDate dataInicial = reservaRequest.getPeriodo().getDataHoraInicial().toLocalDate();
         LocalDate dataFinal = reservaRequest.getPeriodo().getDataHoraFinal().toLocalDate();
+
+        if (dataInicial.isAfter(dataFinal))
+            throw new DataInvalidaException();
 
         LocalDateTime dataHoraInicial = dataInicial.atTime(14, 0, 0);
         LocalDateTime dataHoraFinal = dataFinal.atTime(12, 0, 0);
