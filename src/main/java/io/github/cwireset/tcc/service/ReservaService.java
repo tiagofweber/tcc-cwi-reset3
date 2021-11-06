@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
@@ -29,6 +30,15 @@ public class ReservaService {
 
         long quantidadeDiarias = ChronoUnit.DAYS.between(reservaRequest.getPeriodo().getDataHoraInicial(), reservaRequest.getPeriodo().getDataHoraFinal());
         BigDecimal valorTotal = anuncio.getValorDiaria().multiply(BigDecimal.valueOf(quantidadeDiarias));
+
+        LocalDate dataInicial = reservaRequest.getPeriodo().getDataHoraInicial().toLocalDate();
+        LocalDate dataFinal = reservaRequest.getPeriodo().getDataHoraFinal().toLocalDate();
+
+        LocalDateTime dataHoraInicial = dataInicial.atTime(14, 0, 0);
+        LocalDateTime dataHoraFinal = dataFinal.atTime(12, 0, 0);
+
+        reservaRequest.getPeriodo().setDataHoraInicial(dataHoraInicial);
+        reservaRequest.getPeriodo().setDataHoraFinal(dataHoraFinal);
 
         Pagamento pagamento = new Pagamento(valorTotal, StatusPagamento.PENDENTE);
 
