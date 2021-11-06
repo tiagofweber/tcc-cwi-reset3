@@ -3,6 +3,7 @@ package io.github.cwireset.tcc.service;
 import io.github.cwireset.tcc.domain.*;
 import io.github.cwireset.tcc.exception.reserva.DataInvalidaException;
 import io.github.cwireset.tcc.exception.reserva.PeriodoInvalidoException;
+import io.github.cwireset.tcc.exception.reserva.QuantidadeMinimaDePessoasEmHotelInvalidaException;
 import io.github.cwireset.tcc.exception.reserva.ReservaNaoPermitidaException;
 import io.github.cwireset.tcc.repository.ReservaRepository;
 import io.github.cwireset.tcc.request.CadastrarReservaRequest;
@@ -15,7 +16,6 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 
 @Service
 public class ReservaService {
@@ -48,6 +48,9 @@ public class ReservaService {
 
         if (reservaRequest.getIdSolicitante().equals(anuncio.getAnunciante().getId()))
             throw new ReservaNaoPermitidaException();
+
+        if (anuncio.getImovel().getTipoImovel().equals(TipoImovel.HOTEL) && reservaRequest.getQuantidadePessoas() < 2)
+            throw new QuantidadeMinimaDePessoasEmHotelInvalidaException();
 
         LocalDateTime dataHoraInicial = dataInicial.atTime(14, 0, 0);
         LocalDateTime dataHoraFinal = dataFinal.atTime(12, 0, 0);
