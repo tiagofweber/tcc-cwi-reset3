@@ -72,6 +72,11 @@ public class AnuncioService {
     }
 
     public Anuncio buscarAnuncioPorId(Long idAnuncio) {
+        boolean anuncioExists = anuncioRepository.existsById(idAnuncio);
+
+        if (!anuncioExists)
+            throw new IdAnuncioNaoEncontradoException(idAnuncio);
+
         return anuncioRepository.findById(idAnuncio).get();
     }
 
