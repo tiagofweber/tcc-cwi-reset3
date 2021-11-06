@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.Embeddable;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Getter
@@ -12,9 +13,11 @@ import java.time.LocalDateTime;
 @Embeddable
 public class Periodo {
 
+    @NotNull(message = "Campo obrigatório não informado. Por favor, informe o campo data e hora inicial.")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime dataHoraInicial;
 
+    @NotNull(message = "Campo obrigatório não informado. Por favor, informe o campo data e hora final.")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime dataHoraFinal;
 

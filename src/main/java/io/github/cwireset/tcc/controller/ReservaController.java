@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping(path = "/reservas")
 public class ReservaController {
@@ -16,7 +18,7 @@ public class ReservaController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public InformacaoReservaResponse realizarReserva(@RequestBody CadastrarReservaRequest reservaRequest) {
+    public InformacaoReservaResponse realizarReserva(@RequestBody @Valid CadastrarReservaRequest reservaRequest) {
         return reservaService.realizarReserva(reservaRequest);
     }
 }
