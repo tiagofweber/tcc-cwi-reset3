@@ -1,10 +1,7 @@
 package io.github.cwireset.tcc.service;
 
 import io.github.cwireset.tcc.domain.*;
-import io.github.cwireset.tcc.exception.reserva.DataInvalidaException;
-import io.github.cwireset.tcc.exception.reserva.PeriodoInvalidoException;
-import io.github.cwireset.tcc.exception.reserva.QuantidadeMinimaDePessoasEmHotelInvalidaException;
-import io.github.cwireset.tcc.exception.reserva.ReservaNaoPermitidaException;
+import io.github.cwireset.tcc.exception.reserva.*;
 import io.github.cwireset.tcc.repository.ReservaRepository;
 import io.github.cwireset.tcc.request.CadastrarReservaRequest;
 import io.github.cwireset.tcc.response.DadosAnuncioResponse;
@@ -51,6 +48,9 @@ public class ReservaService {
 
         if (anuncio.getImovel().getTipoImovel().equals(TipoImovel.HOTEL) && reservaRequest.getQuantidadePessoas() < 2)
             throw new QuantidadeMinimaDePessoasEmHotelInvalidaException();
+
+        if (anuncio.getImovel().getTipoImovel().equals(TipoImovel.POUSADA) && quantidadeDiarias < 5)
+            throw new QuantidadeMinimaDeDiariasEmPousadaInvalidaException();
 
         LocalDateTime dataHoraInicial = dataInicial.atTime(14, 0, 0);
         LocalDateTime dataHoraFinal = dataFinal.atTime(12, 0, 0);
