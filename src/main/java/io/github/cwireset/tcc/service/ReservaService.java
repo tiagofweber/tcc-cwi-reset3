@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class ReservaService {
@@ -33,14 +34,14 @@ public class ReservaService {
         LocalDate dataInicial = reservaRequest.getPeriodo().getDataHoraInicial().toLocalDate();
         LocalDate dataFinal = reservaRequest.getPeriodo().getDataHoraFinal().toLocalDate();
 
-        long quantidadeDiarias = (dataFinal.getDayOfMonth() - dataInicial.getDayOfMonth());
+        long quantidadeDiarias = (dataFinal.getDayOfYear() - dataInicial.getDayOfYear());
 
         BigDecimal valorTotal = anuncio.getValorDiaria().multiply(BigDecimal.valueOf(quantidadeDiarias));
 
         if (dataInicial.isAfter(dataFinal))
             throw new DataInvalidaException();
 
-        if ((dataFinal.getDayOfMonth() - dataInicial.getDayOfMonth()) < 1)
+        if ((dataFinal.getDayOfYear() - dataInicial.getDayOfYear()) < 1)
             throw new PeriodoInvalidoException();
 
         if (reservaRequest.getIdSolicitante().equals(anuncio.getAnunciante().getId()))
@@ -51,6 +52,18 @@ public class ReservaService {
 
         if (anuncio.getImovel().getTipoImovel().equals(TipoImovel.POUSADA) && quantidadeDiarias < 5)
             throw new QuantidadeMinimaDeDiariasEmPousadaInvalidaException();
+
+        List<Reserva> reservaJaExistente = reservaRepository
+            .findAllByAnuncioImovelIdEqualsAndPeriodoDataHoraInicialLessThanEqualAndPeriodoDataHoraFinalGreaterThanEqualAndPagamentoStatusNotAndPagamentoStatusNot(
+                anuncio.getImovel().getId(),
+                reservaRequest.getPeriodo().getDataHoraFinal(),
+                reservaRequest.getPeriodo().getDataHoraInicial(),
+                StatusPagamento.ESTORNADO,
+                StatusPagamento.CANCELADO
+            );
+
+        if (!reservaJaExistente.isEmpty())
+            throw new PeriodoIndisponivelException();
 
         LocalDateTime dataHoraInicial = dataInicial.atTime(14, 0, 0);
         LocalDateTime dataHoraFinal = dataFinal.atTime(12, 0, 0);
