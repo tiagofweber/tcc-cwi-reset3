@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/reservas")
@@ -36,5 +37,10 @@ public class ReservaController {
             @PageableDefault(sort = "periodoDataHoraFinal", direction = Sort.Direction.DESC) @ApiIgnore Pageable pageable
             ) {
         return reservaService.listarReservasPorSolicitante(idSolicitante, periodo, pageable);
+    }
+
+    @GetMapping(path = "/anuncios/anunciantes/{idAnunciante}")
+    public List<Reserva> listarReservasPorAnunciante(@PathVariable(value = "idAnunciante") Long idAnunciante) {
+        return reservaService.listarReservasPorAnunciante(idAnunciante);
     }
 }

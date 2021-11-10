@@ -112,4 +112,10 @@ public class ReservaService {
 
         return reservas;
     }
+
+    public List<Reserva> listarReservasPorAnunciante(Long idAnunciante) {
+        List<Reserva> reservas = reservaRepository.findAllByAnuncioAnuncianteId(idAnunciante);
+
+        return reservas;
+    }
 }
