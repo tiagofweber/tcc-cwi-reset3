@@ -19,4 +19,8 @@ public interface ReservaRepository extends JpaRepository<Reserva, Long> {
             StatusPagamento statusPagamento1,
             StatusPagamento statusPagamento2
     );
+
+    List<Reserva> findAllBySolicitanteIdAndPeriodoDataHoraInicialAfterAndPeriodoDataHoraFinalBefore(Long idSolicitante, LocalDateTime dataHoraInicial, LocalDateTime dataHoraFinal);
+
+    List<Reserva> findAllBySolicitanteId(Long idSolicitante);
 }

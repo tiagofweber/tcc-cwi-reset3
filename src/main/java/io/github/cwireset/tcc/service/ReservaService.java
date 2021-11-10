@@ -96,4 +96,17 @@ public class ReservaService {
                 reservaSalva.getPagamento()
         );
     }
+
+    public List<Reserva> listarReservasPorSolicitante(Long idSolicitante, Periodo periodo) {
+        if (periodo.getDataHoraInicial() == null || periodo.getDataHoraFinal() == null) {
+            return reservaRepository.findAllBySolicitanteId(idSolicitante);
+        }
+        List<Reserva> reservas = reservaRepository.findAllBySolicitanteIdAndPeriodoDataHoraInicialAfterAndPeriodoDataHoraFinalBefore(
+                idSolicitante,
+                periodo.getDataHoraInicial(),
+                periodo.getDataHoraFinal()
+        );
+
+        return reservas;
+    }
 }
