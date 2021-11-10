@@ -8,6 +8,8 @@ import io.github.cwireset.tcc.response.DadosAnuncioResponse;
 import io.github.cwireset.tcc.response.DadosSolicitanteResponse;
 import io.github.cwireset.tcc.response.InformacaoReservaResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -97,14 +99,15 @@ public class ReservaService {
         );
     }
 
-    public List<Reserva> listarReservasPorSolicitante(Long idSolicitante, Periodo periodo) {
+    public Page<Reserva> listarReservasPorSolicitante(Long idSolicitante, Periodo periodo, Pageable pageable) {
         if (periodo.getDataHoraInicial() == null || periodo.getDataHoraFinal() == null) {
-            return reservaRepository.findAllBySolicitanteId(idSolicitante);
+            return reservaRepository.findAllBySolicitanteId(idSolicitante, pageable);
         }
-        List<Reserva> reservas = reservaRepository.findAllBySolicitanteIdAndPeriodoDataHoraInicialAfterAndPeriodoDataHoraFinalBefore(
+        Page<Reserva> reservas = reservaRepository.findAllBySolicitanteIdAndPeriodoDataHoraInicialAfterAndPeriodoDataHoraFinalBefore(
                 idSolicitante,
                 periodo.getDataHoraInicial(),
-                periodo.getDataHoraFinal()
+                periodo.getDataHoraFinal(),
+                pageable
         );
 
         return reservas;

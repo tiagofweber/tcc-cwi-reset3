@@ -1,9 +1,9 @@
 package io.github.cwireset.tcc.repository;
 
-import io.github.cwireset.tcc.domain.Imovel;
-import io.github.cwireset.tcc.domain.Periodo;
 import io.github.cwireset.tcc.domain.Reserva;
 import io.github.cwireset.tcc.domain.StatusPagamento;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -19,8 +19,11 @@ public interface ReservaRepository extends JpaRepository<Reserva, Long> {
             StatusPagamento statusPagamento1,
             StatusPagamento statusPagamento2
     );
-
-    List<Reserva> findAllBySolicitanteIdAndPeriodoDataHoraInicialAfterAndPeriodoDataHoraFinalBefore(Long idSolicitante, LocalDateTime dataHoraInicial, LocalDateTime dataHoraFinal);
-
-    List<Reserva> findAllBySolicitanteId(Long idSolicitante);
+    Page<Reserva> findAllBySolicitanteIdAndPeriodoDataHoraInicialAfterAndPeriodoDataHoraFinalBefore(
+            Long idSolicitante,
+            LocalDateTime dataHoraInicial,
+            LocalDateTime dataHoraFinal,
+            Pageable pageable
+    );
+    Page<Reserva> findAllBySolicitanteId(Long idSolicitante, Pageable pageable);
 }

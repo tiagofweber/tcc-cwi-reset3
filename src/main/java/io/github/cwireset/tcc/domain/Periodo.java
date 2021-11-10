@@ -6,7 +6,6 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Embeddable;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Getter
