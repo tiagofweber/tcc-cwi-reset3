@@ -26,5 +26,5 @@ public interface ReservaRepository extends JpaRepository<Reserva, Long> {
             Pageable pageable
     );
     Page<Reserva> findAllBySolicitanteId(Long idSolicitante, Pageable pageable);
-    List<Reserva> findAllByAnuncioAnuncianteId(Long idAnunciante);
+    List<Reserva> findAllByAnuncioAnuncianteId(Long idAnunciante, Pageable pageable);
 }
