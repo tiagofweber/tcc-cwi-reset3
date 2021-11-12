@@ -125,6 +125,11 @@ public class ReservaService {
         if (reserva == null)
             throw new IdReservaNaoEncontradoException(idReserva);
 
+        boolean formaDePagamentoAceita = reserva.getAnuncio().getFormasAceitas().contains(formaPagamento);
+
+        if (!formaDePagamentoAceita)
+            throw new FormaDePagamentoNaoAceitaException(formaPagamento, reserva.getAnuncio().getFormasAceitas());
+
         reserva.getPagamento().setFormaEscolhida(formaPagamento);
         reserva.getPagamento().setStatus(StatusPagamento.PAGO);
         reservaRepository.save(reserva);
