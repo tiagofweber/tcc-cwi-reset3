@@ -126,6 +126,7 @@ public class ReservaService {
             throw new IdReservaNaoEncontradoException(idReserva);
 
         reserva.getPagamento().setFormaEscolhida(formaPagamento);
+        reserva.getPagamento().setStatus(StatusPagamento.PAGO);
         reservaRepository.save(reserva);
     }
 
