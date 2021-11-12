@@ -118,4 +118,12 @@ public class ReservaService {
 
         return reservas;
     }
+
+    public void pagarReserva(Long idReserva, FormaPagamento formaPagamento) {
+        Reserva reserva = reservaRepository.findById(idReserva).get();
+
+        reserva.getPagamento().setFormaEscolhida(formaPagamento);
+        reservaRepository.save(reserva);
+    }
+
 }

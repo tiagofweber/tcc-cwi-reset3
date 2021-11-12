@@ -1,5 +1,6 @@
 package io.github.cwireset.tcc.controller;
 
+import io.github.cwireset.tcc.domain.FormaPagamento;
 import io.github.cwireset.tcc.domain.Periodo;
 import io.github.cwireset.tcc.domain.Reserva;
 import io.github.cwireset.tcc.request.CadastrarReservaRequest;
@@ -45,5 +46,10 @@ public class ReservaController {
             @PageableDefault(sort = "periodoDataHoraFinal", direction = Sort.Direction.DESC) @ApiIgnore Pageable pageable
     ) {
         return reservaService.listarReservasPorAnunciante(idAnunciante, pageable);
+    }
+
+    @PutMapping(path = "/{idReserva}/pagamentos")
+    public void pagarReserva(@PathVariable Long idReserva, @RequestBody FormaPagamento formaPagamento) {
+        reservaService.pagarReserva(idReserva, formaPagamento);
     }
 }
