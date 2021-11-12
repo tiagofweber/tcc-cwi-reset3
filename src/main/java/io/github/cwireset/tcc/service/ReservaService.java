@@ -120,7 +120,10 @@ public class ReservaService {
     }
 
     public void pagarReserva(Long idReserva, FormaPagamento formaPagamento) {
-        Reserva reserva = reservaRepository.findById(idReserva).get();
+        Reserva reserva = reservaRepository.findById(idReserva).orElse(null);
+
+        if (reserva == null)
+            throw new IdReservaNaoEncontradoException(idReserva);
 
         reserva.getPagamento().setFormaEscolhida(formaPagamento);
         reservaRepository.save(reserva);
