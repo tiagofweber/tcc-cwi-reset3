@@ -151,6 +151,9 @@ public class ReservaService {
     public void estornarReserva(Long idReserva) {
         Reserva reserva = buscarReservaPorId(idReserva);
 
+        if (reserva.getPagamento().getStatus() != StatusPagamento.PAGO)
+            throw new EstornoInvalidoException();
+
         reserva.getPagamento().setStatus(StatusPagamento.ESTORNADO);
         reserva.getPagamento().setFormaEscolhida(null);
         reservaRepository.save(reserva);
