@@ -125,14 +125,25 @@ public class ReservaService {
         if (reserva == null)
             throw new IdReservaNaoEncontradoException(idReserva);
 
+        String formasDePagamentoAceitasPeloAnuncio = converterListParaString(reserva.getAnuncio().getFormasAceitas());
+
         boolean formaDePagamentoAceita = reserva.getAnuncio().getFormasAceitas().contains(formaPagamento);
 
         if (!formaDePagamentoAceita)
-            throw new FormaDePagamentoNaoAceitaException(formaPagamento, reserva.getAnuncio().getFormasAceitas());
+            throw new FormaDePagamentoNaoAceitaException(formaPagamento, formasDePagamentoAceitasPeloAnuncio);
 
         reserva.getPagamento().setFormaEscolhida(formaPagamento);
         reserva.getPagamento().setStatus(StatusPagamento.PAGO);
         reservaRepository.save(reserva);
+    }
+
+    private String converterListParaString(List<FormaPagamento> formasAceitas) {
+        String str = "";
+        for (FormaPagamento formaAceita : formasAceitas) {
+            str += formaAceita + ", ";
+        }
+        str = str.replaceAll(", $", "");
+        return str.toString();
     }
 
 }

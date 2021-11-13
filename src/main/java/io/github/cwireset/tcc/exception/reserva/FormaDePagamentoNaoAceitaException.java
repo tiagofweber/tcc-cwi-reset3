@@ -8,7 +8,7 @@ import java.util.List;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class FormaDePagamentoNaoAceitaException extends RuntimeException {
-    public FormaDePagamentoNaoAceitaException(FormaPagamento formaPagamento, List<FormaPagamento> formasAceitas) {
+    public FormaDePagamentoNaoAceitaException(FormaPagamento formaPagamento, String formasAceitas) {
         super(String.format("O anúncio não aceita %s como forma de pagamento. As formas aceitas são %s.", formaPagamento, formasAceitas));
     }
 }
