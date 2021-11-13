@@ -132,6 +132,9 @@ public class ReservaService {
         if (!formaDePagamentoAceita)
             throw new FormaDePagamentoNaoAceitaException(formaPagamento, formasDePagamentoAceitasPeloAnuncio);
 
+        if (reserva.getPagamento().getStatus() != StatusPagamento.PENDENTE)
+            throw new PagamentoInvalidoException();
+
         reserva.getPagamento().setFormaEscolhida(formaPagamento);
         reserva.getPagamento().setStatus(StatusPagamento.PAGO);
         reservaRepository.save(reserva);
