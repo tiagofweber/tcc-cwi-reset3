@@ -58,4 +58,9 @@ public class ReservaController {
         reservaService.cancelarReserva(idReserva);
     }
 
+    @PutMapping(path = "/{idReserva}/pagamentos/estornar")
+    public void estornarReserva(@PathVariable Long idReserva) {
+        reservaService.estornarReserva(idReserva);
+    }
+
 }

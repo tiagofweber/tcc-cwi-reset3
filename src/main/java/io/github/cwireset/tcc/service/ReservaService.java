@@ -148,6 +148,13 @@ public class ReservaService {
         reservaRepository.save(reserva);
     }
 
+    public void estornarReserva(Long idReserva) {
+        Reserva reserva = buscarReservaPorId(idReserva);
+
+        reserva.getPagamento().setStatus(StatusPagamento.ESTORNADO);
+        reservaRepository.save(reserva);
+    }
+
     private Reserva buscarReservaPorId(Long idReserva) {
         Reserva reserva = reservaRepository.findById(idReserva).orElse(null);
 
