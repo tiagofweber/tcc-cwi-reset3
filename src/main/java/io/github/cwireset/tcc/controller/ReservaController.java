@@ -52,4 +52,10 @@ public class ReservaController {
     public void pagarReserva(@PathVariable Long idReserva, @RequestBody FormaPagamento formaPagamento) {
         reservaService.pagarReserva(idReserva, formaPagamento);
     }
+
+    @PutMapping(path = "/{idReserva}/pagamentos/cancelar")
+    public void cancelarReserva(@PathVariable Long idReserva) {
+        reservaService.cancelarReserva(idReserva);
+    }
+
 }

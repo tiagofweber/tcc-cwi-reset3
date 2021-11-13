@@ -7,6 +7,7 @@ import io.github.cwireset.tcc.request.CadastrarReservaRequest;
 import io.github.cwireset.tcc.response.DadosAnuncioResponse;
 import io.github.cwireset.tcc.response.DadosSolicitanteResponse;
 import io.github.cwireset.tcc.response.InformacaoReservaResponse;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -120,10 +121,7 @@ public class ReservaService {
     }
 
     public void pagarReserva(Long idReserva, FormaPagamento formaPagamento) {
-        Reserva reserva = reservaRepository.findById(idReserva).orElse(null);
-
-        if (reserva == null)
-            throw new IdReservaNaoEncontradoException(idReserva);
+        Reserva reserva = buscarReservaPorId(idReserva);
 
         String formasDePagamentoAceitasPeloAnuncio = converterListParaString(reserva.getAnuncio().getFormasAceitas());
 
@@ -138,6 +136,21 @@ public class ReservaService {
         reserva.getPagamento().setFormaEscolhida(formaPagamento);
         reserva.getPagamento().setStatus(StatusPagamento.PAGO);
         reservaRepository.save(reserva);
+    }
+
+    public void cancelarReserva(Long idReserva) {
+        Reserva reserva = buscarReservaPorId(idReserva);
+
+        reserva.getPagamento().setStatus(StatusPagamento.CANCELADO);
+        reservaRepository.save(reserva);
+    }
+
+    private Reserva buscarReservaPorId(Long idReserva) {
+        Reserva reserva = reservaRepository.findById(idReserva).orElse(null);
+
+        if (reserva == null)
+            throw new IdReservaNaoEncontradoException(idReserva);
+        return reserva;
     }
 
     private String converterListParaString(List<FormaPagamento> formasAceitas) {
