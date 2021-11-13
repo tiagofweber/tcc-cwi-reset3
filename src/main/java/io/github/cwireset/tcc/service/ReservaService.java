@@ -152,6 +152,7 @@ public class ReservaService {
         Reserva reserva = buscarReservaPorId(idReserva);
 
         reserva.getPagamento().setStatus(StatusPagamento.ESTORNADO);
+        reserva.getPagamento().setFormaEscolhida(null);
         reservaRepository.save(reserva);
     }
 
