@@ -44,4 +44,6 @@ public class Usuario {
     @Valid
     private Endereco endereco;
 
+    private String avatar;
+
 }

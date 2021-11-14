@@ -7,6 +7,7 @@ import io.github.cwireset.tcc.exception.usuario.EmailDuplicadoException;
 import io.github.cwireset.tcc.exception.usuario.IdUsuarioNaoEncontradoException;
 import io.github.cwireset.tcc.repository.UsuarioRepository;
 import io.github.cwireset.tcc.request.AtualizarUsuarioRequest;
+import io.github.cwireset.tcc.request.UsuarioAvatarRequest;
 import io.github.cwireset.tcc.response.DadosSolicitanteResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,6 +19,8 @@ public class UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+    @Autowired
+    private UsuarioAvatarService avatarService;
 
     public Usuario criarUsuario(Usuario usuario) {
         boolean cpfExists = usuarioRepository.existsByCpf(usuario.getCpf());
@@ -26,6 +29,10 @@ public class UsuarioService {
 
         if (cpfExists)
             throw new CpfDuplicadoException(usuario.getCpf());
+
+        UsuarioAvatarRequest usuarioAvatar = avatarService.buscarAvatar();
+
+        usuario.setAvatar(usuarioAvatar.getLink());
 
         return usuarioRepository.save(usuario);
     }
