@@ -36,12 +36,22 @@ public class Imovel {
     @JoinColumn(name = "id_imovel")
     private List<CaracteristicaImovel> caracteristicas;
 
-    public Imovel(String identificacao, TipoImovel tipoImovel, Endereco endereco, Usuario proprietario, List<CaracteristicaImovel> caracteristicas) {
+    private Boolean ativo;
+
+    public Imovel(
+            String identificacao,
+            TipoImovel tipoImovel,
+            Endereco endereco,
+            Usuario proprietario,
+            List<CaracteristicaImovel> caracteristicas,
+            Boolean ativo
+    ) {
         this.identificacao = identificacao;
         this.tipoImovel = tipoImovel;
         this.endereco = endereco;
         this.proprietario = proprietario;
         this.caracteristicas = caracteristicas;
+        this.ativo = ativo;
     }
 
 }

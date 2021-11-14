@@ -66,7 +66,7 @@ public class AnuncioService {
     }
 
     public Boolean existeAnuncioDeImovel(Imovel imovel) {
-        return anuncioRepository.existsByImovelId(imovel.getId());
+        return anuncioRepository.existsByImovelIdAndAtivoTrue(imovel.getId());
     }
 
     public Anuncio buscarAnuncioPorId(Long idAnuncio) {

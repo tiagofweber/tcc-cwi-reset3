@@ -11,4 +11,5 @@ public interface AnuncioRepository extends JpaRepository<Anuncio, Long> {
     boolean existsByImovelId(Long idImovel);
     Page<Anuncio> findAllByAtivoTrue(Pageable pageable);
     Page<Anuncio> findAllByAnuncianteIdAndAtivoTrue(Long idAnunciante, Pageable pageable);
+    Boolean existsByImovelIdAndAtivoTrue(Long id);
 }

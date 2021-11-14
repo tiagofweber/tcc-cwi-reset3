@@ -8,5 +8,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ImovelRepository extends JpaRepository<Imovel, Long> {
-    Page<Imovel> findAllByProprietarioId(Long idProprietario, Pageable pageable);
+    Page<Imovel> findAllByAtivoTrue(Pageable pageable);
+    Page<Imovel> findAllByProprietarioIdAndAtivoTrue(Long idProprietario, Pageable pageable);
+    Imovel findByIdEqualsAndAtivoTrue(Long id);
+    boolean existsByIdAndAtivoTrue(Long id);
 }

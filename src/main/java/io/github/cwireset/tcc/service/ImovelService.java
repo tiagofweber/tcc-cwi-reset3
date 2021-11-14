@@ -32,27 +32,28 @@ public class ImovelService {
                 imovelRequest.getTipoImovel(),
                 imovelRequest.getEndereco(),
                 proprietario,
-                imovelRequest.getCaracteristicas()
+                imovelRequest.getCaracteristicas(),
+                true
         );
 
         return imovelRepository.save(imovel);
     }
 
     public Page<Imovel> listarImoveis(Pageable pageable) {
-        return imovelRepository.findAll(pageable);
+        return imovelRepository.findAllByAtivoTrue(pageable);
     }
 
     public Page<Imovel> listarImoveisPorProprietario(Long idProprietario, Pageable pageable) {
-        return imovelRepository.findAllByProprietarioId(idProprietario, pageable);
+        return imovelRepository.findAllByProprietarioIdAndAtivoTrue(idProprietario, pageable);
     }
 
     public Imovel buscarImovelPorId(Long id) {
-        boolean idExists = imovelRepository.existsById(id);
+        boolean idExists = imovelRepository.existsByIdAndAtivoTrue(id);
 
         if (!idExists)
             throw new IdImovelNaoEncontradoException(id);
 
-        return imovelRepository.findById(id).get();
+        return imovelRepository.findByIdEqualsAndAtivoTrue(id);
     }
 
     public void removerImovel(Long id) {
@@ -62,6 +63,8 @@ public class ImovelService {
         if (anuncioExiste)
             throw new ExcluirImovelAnunciadoException();
 
-        imovelRepository.delete(imovel);
+        imovel.setAtivo(false);
+
+        imovelRepository.save(imovel);
     }
 }
