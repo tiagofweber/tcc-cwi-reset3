@@ -8,6 +8,8 @@ import io.github.cwireset.tcc.exception.imovel.ImovelJaAnunciadoException;
 import io.github.cwireset.tcc.repository.AnuncioRepository;
 import io.github.cwireset.tcc.request.CadastrarAnuncioRequest;
 import io.github.cwireset.tcc.response.DadosAnuncioResponse;
+import io.github.cwireset.tcc.service.usuario.BuscarUsuarioService;
+import io.github.cwireset.tcc.service.usuario.CadastrarUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,7 +21,7 @@ public class AnuncioService {
     @Autowired
     private AnuncioRepository anuncioRepository;
     @Autowired
-    private UsuarioService usuarioService;
+    private BuscarUsuarioService buscarUsuarioService;
     @Autowired
     private ImovelService imovelService;
 
@@ -30,7 +32,7 @@ public class AnuncioService {
             throw new ImovelJaAnunciadoException(anuncioRequest.getIdImovel());
 
         Imovel imovel = imovelService.buscarImovelPorId(anuncioRequest.getIdImovel());
-        Usuario anunciante = usuarioService.buscarUsuarioPorId(anuncioRequest.getIdAnunciante());
+        Usuario anunciante = buscarUsuarioService.buscarUsuarioPorId(anuncioRequest.getIdAnunciante());
 
         Anuncio anuncio = new Anuncio(
                 anuncioRequest.getTipoAnuncio(),
@@ -81,7 +83,7 @@ public class AnuncioService {
     public DadosAnuncioResponse criarAnuncioResponse(Long idAnuncio) {
         Anuncio anuncio = buscarAnuncioPorId(idAnuncio);
         Imovel imovel = imovelService.buscarImovelPorId(anuncio.getImovel().getId());
-        Usuario anunciante = usuarioService.buscarUsuarioPorId(anuncio.getAnunciante().getId());
+        Usuario anunciante = buscarUsuarioService.buscarUsuarioPorId(anuncio.getAnunciante().getId());
 
         return new DadosAnuncioResponse(
                 idAnuncio,

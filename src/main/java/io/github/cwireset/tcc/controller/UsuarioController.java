@@ -2,7 +2,9 @@ package io.github.cwireset.tcc.controller;
 
 import io.github.cwireset.tcc.domain.Usuario;
 import io.github.cwireset.tcc.request.AtualizarUsuarioRequest;
-import io.github.cwireset.tcc.service.UsuarioService;
+import io.github.cwireset.tcc.service.usuario.AtualizarUsuarioService;
+import io.github.cwireset.tcc.service.usuario.BuscarUsuarioService;
+import io.github.cwireset.tcc.service.usuario.CadastrarUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,27 +20,31 @@ import javax.validation.Valid;
 public class UsuarioController {
 
     @Autowired
-    private UsuarioService usuarioService;
+    private CadastrarUsuarioService cadastrarUsuarioService;
+    @Autowired
+    private AtualizarUsuarioService atualizarUsuarioService;
+    @Autowired
+    private BuscarUsuarioService buscarUsuarioService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Usuario criarUsuario(@RequestBody @Valid Usuario usuario) {
-        return usuarioService.criarUsuario(usuario);
+        return cadastrarUsuarioService.criarUsuario(usuario);
     }
 
     @GetMapping
     public Page<Usuario> listarUsuarios(@PageableDefault(sort = "nome") @ApiIgnore Pageable pageable) {
-        return usuarioService.listarUsuarios(pageable);
+        return buscarUsuarioService.listarUsuarios(pageable);
     }
 
     @GetMapping(path = "/{idUsuario}")
     public Usuario buscarUsuarioPorId(@PathVariable("idUsuario") Long id) {
-        return usuarioService.buscarUsuarioPorId(id);
+        return buscarUsuarioService.buscarUsuarioPorId(id);
     }
 
     @GetMapping(path = "/cpf/{cpf}")
     public Usuario buscarUsuarioPorCpf(@PathVariable("cpf") String cpf) {
-        return usuarioService.buscarUsuarioPorCpf(cpf);
+        return buscarUsuarioService.buscarUsuarioPorCpf(cpf);
     }
 
     @PutMapping(path = "/{id}")
@@ -46,6 +52,6 @@ public class UsuarioController {
             @PathVariable Long id,
             @RequestBody @Valid AtualizarUsuarioRequest usuarioRequest
     ) {
-        return usuarioService.atualizarUsuario(id, usuarioRequest);
+        return atualizarUsuarioService.atualizarUsuario(id, usuarioRequest);
     }
 }

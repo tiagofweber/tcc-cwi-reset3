@@ -7,7 +7,8 @@ import io.github.cwireset.tcc.request.CadastrarReservaRequest;
 import io.github.cwireset.tcc.response.DadosAnuncioResponse;
 import io.github.cwireset.tcc.response.DadosSolicitanteResponse;
 import io.github.cwireset.tcc.response.InformacaoReservaResponse;
-import org.jetbrains.annotations.NotNull;
+import io.github.cwireset.tcc.service.usuario.BuscarUsuarioService;
+import io.github.cwireset.tcc.service.usuario.CadastrarUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,12 +25,14 @@ public class ReservaService {
     @Autowired
     private ReservaRepository reservaRepository;
     @Autowired
-    private UsuarioService usuarioService;
+    private CadastrarUsuarioService cadastrarUsuarioService;
+    @Autowired
+    private BuscarUsuarioService buscarUsuarioService;
     @Autowired
     private AnuncioService anuncioService;
 
     public InformacaoReservaResponse realizarReserva(CadastrarReservaRequest reservaRequest) {
-        Usuario solicitante = usuarioService.buscarUsuarioPorId(reservaRequest.getIdSolicitante());
+        Usuario solicitante = buscarUsuarioService.buscarUsuarioPorId(reservaRequest.getIdSolicitante());
         Anuncio anuncio = anuncioService.buscarAnuncioPorId(reservaRequest.getIdAnuncio());
 
 //        long quantidadeDiarias = ChronoUnit.DAYS.between(reservaRequest.getPeriodo().getDataHoraInicial(), reservaRequest.getPeriodo().getDataHoraFinal());
@@ -87,7 +90,7 @@ public class ReservaService {
 
         Reserva reservaSalva = reservaRepository.save(reserva);
 
-        DadosSolicitanteResponse solicitanteResponse = usuarioService.criarSolicitanteResponse(reservaRequest.getIdSolicitante());
+        DadosSolicitanteResponse solicitanteResponse = cadastrarUsuarioService.criarSolicitanteResponse(reservaRequest.getIdSolicitante());
         DadosAnuncioResponse anuncioResponse = anuncioService.criarAnuncioResponse(reservaRequest.getIdAnuncio());
 
         return new InformacaoReservaResponse(
