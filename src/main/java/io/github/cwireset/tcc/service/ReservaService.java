@@ -9,6 +9,7 @@ import io.github.cwireset.tcc.response.DadosSolicitanteResponse;
 import io.github.cwireset.tcc.response.InformacaoReservaResponse;
 import io.github.cwireset.tcc.service.usuario.BuscarUsuarioService;
 import io.github.cwireset.tcc.service.usuario.CadastrarUsuarioService;
+import io.github.cwireset.tcc.service.usuario.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +25,8 @@ public class ReservaService {
 
     @Autowired
     private ReservaRepository reservaRepository;
+    @Autowired
+    private UsuarioService usuarioService;
     @Autowired
     private CadastrarUsuarioService cadastrarUsuarioService;
     @Autowired
@@ -90,7 +93,7 @@ public class ReservaService {
 
         Reserva reservaSalva = reservaRepository.save(reserva);
 
-        DadosSolicitanteResponse solicitanteResponse = cadastrarUsuarioService.criarSolicitanteResponse(reservaRequest.getIdSolicitante());
+        DadosSolicitanteResponse solicitanteResponse = usuarioService.criarSolicitanteResponse(reservaRequest.getIdSolicitante());
         DadosAnuncioResponse anuncioResponse = anuncioService.criarAnuncioResponse(reservaRequest.getIdAnuncio());
 
         return new InformacaoReservaResponse(

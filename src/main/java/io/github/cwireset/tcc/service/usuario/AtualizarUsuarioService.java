@@ -12,15 +12,15 @@ public class AtualizarUsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
     @Autowired
-    private BuscarUsuarioService buscarUsuarioService;
+    private UsuarioService usuarioService;
     @Autowired
-    private CadastrarUsuarioService cadastrarUsuarioService;
+    private BuscarUsuarioService buscarUsuarioService;
 
     public Usuario atualizarUsuario(Long id, AtualizarUsuarioRequest usuarioRequest) {
         Usuario usuario = buscarUsuarioService.buscarUsuarioPorId(id);
 
         if (!usuario.getEmail().equals(usuarioRequest.getEmail()))
-            cadastrarUsuarioService.validarEmail(usuarioRequest.getEmail());
+            usuarioService.validarEmail(usuarioRequest.getEmail());
 
         usuario.setNome(usuarioRequest.getNome());
         usuario.setEmail(usuarioRequest.getEmail());
