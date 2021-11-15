@@ -26,11 +26,11 @@ public class UsuarioService {
             throw new EmailDuplicadoException(email);
     }
 
-    private Boolean cpfExists(String cpf) {
+    public Boolean cpfExists(String cpf) {
         return usuarioRepository.existsByCpf(cpf);
     }
 
-    private Boolean emailExists(String email) {
+    public Boolean emailExists(String email) {
         return usuarioRepository.existsByEmail(email);
     }
 
