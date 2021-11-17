@@ -9,6 +9,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 @Getter
@@ -46,4 +47,16 @@ public class Usuario {
 
     private String avatar;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Usuario usuario = (Usuario) o;
+        return Objects.equals(id, usuario.id) && nome.equals(usuario.nome) && email.equals(usuario.email) && senha.equals(usuario.senha) && cpf.equals(usuario.cpf) && dataNascimento.equals(usuario.dataNascimento) && Objects.equals(endereco, usuario.endereco) && Objects.equals(avatar, usuario.avatar);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, nome, email, senha, cpf, dataNascimento, endereco, avatar);
+    }
 }

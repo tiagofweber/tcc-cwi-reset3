@@ -5,12 +5,15 @@ import io.github.cwireset.tcc.repository.UsuarioRepository;
 import io.github.cwireset.tcc.request.UsuarioAvatarRequest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -28,30 +31,47 @@ public class CadastrarUsuarioServiceTest {
     @InjectMocks
     private CadastrarUsuarioService cadastrarUsuarioService;
 
-    private final Usuario usuario = Usuario.builder()
-            .id(1L)
-            .nome("Jane Doe")
-            .email("janedoe@email.com")
-            .senha("qwerty")
-            .cpf("99999999999")
-            .dataNascimento(LocalDate.of(1990, 12, 10))
-            .build();
+    @Captor
+    private ArgumentCaptor<Usuario> usuarioArgumentCaptor;
+
+    private Usuario buildUsuarioRequest() {
+        return Usuario.builder()
+                .nome("Jane Doe")
+                .email("janedoe@email.com")
+                .senha("qwerty")
+                .cpf("12312312312")
+                .dataNascimento(LocalDate.of(1990, 12, 10))
+                .build();
+    }
 
     @Test
     public void cadastrarUsuarioComSucesso() {
         // Arrange
         String linkAvatar = "www.linkavatar.com";
+        Usuario usuarioRequest = buildUsuarioRequest();
+        Usuario expected = Usuario.builder()
+                .nome(usuarioRequest.getNome())
+                .email(usuarioRequest.getEmail())
+                .senha(usuarioRequest.getSenha())
+                .cpf(usuarioRequest.getCpf())
+                .dataNascimento(usuarioRequest.getDataNascimento())
+                .avatar(linkAvatar)
+                .build();
         UsuarioAvatarRequest usuarioAvatar = UsuarioAvatarRequest.builder()
                 .link(linkAvatar)
                 .build();
         when(usuarioAvatarService.buscarAvatar()).thenReturn(usuarioAvatar);
+        when(usuarioRepository.save(usuarioArgumentCaptor.capture())).thenReturn(expected);
 
         // Action
-        cadastrarUsuarioService.criarUsuario(usuario);
+        cadastrarUsuarioService.criarUsuario(usuarioRequest);
 
         // Assert
-        verify(usuarioService).validarEmail(anyString());
-        verify(usuarioService).validarCpf(anyString());
-        verify(usuarioRepository).save(any(Usuario.class));
+        verify(usuarioService, times(1)).validarEmail(anyString());
+        verify(usuarioService, times(1)).validarCpf(anyString());
+        verify(usuarioRepository, times(1)).save(any());
+
+        assertEquals(expected, usuarioArgumentCaptor.getValue());
     }
+
 }
