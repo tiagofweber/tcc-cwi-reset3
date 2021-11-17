@@ -1,4 +1,4 @@
-package io.github.cwireset.tcc.service;
+package io.github.cwireset.tcc.service.reserva;
 
 import io.github.cwireset.tcc.domain.*;
 import io.github.cwireset.tcc.exception.reserva.*;
@@ -7,6 +7,7 @@ import io.github.cwireset.tcc.request.CadastrarReservaRequest;
 import io.github.cwireset.tcc.response.DadosAnuncioResponse;
 import io.github.cwireset.tcc.response.DadosSolicitanteResponse;
 import io.github.cwireset.tcc.response.InformacaoReservaResponse;
+import io.github.cwireset.tcc.service.AnuncioService;
 import io.github.cwireset.tcc.service.usuario.BuscarUsuarioService;
 import io.github.cwireset.tcc.service.usuario.CadastrarUsuarioService;
 import io.github.cwireset.tcc.service.usuario.UsuarioService;
@@ -33,6 +34,8 @@ public class ReservaService {
     private BuscarUsuarioService buscarUsuarioService;
     @Autowired
     private AnuncioService anuncioService;
+    @Autowired
+    private BuscarReservaService buscarReservaService;
 
     public InformacaoReservaResponse realizarReserva(CadastrarReservaRequest reservaRequest) {
         Usuario solicitante = buscarUsuarioService.buscarUsuarioPorId(reservaRequest.getIdSolicitante());
@@ -106,28 +109,8 @@ public class ReservaService {
         );
     }
 
-    public Page<Reserva> listarReservasPorSolicitante(Long idSolicitante, Periodo periodo, Pageable pageable) {
-        if (periodo.getDataHoraInicial() == null || periodo.getDataHoraFinal() == null) {
-            return reservaRepository.findAllBySolicitanteId(idSolicitante, pageable);
-        }
-        Page<Reserva> reservas = reservaRepository.findAllBySolicitanteIdAndPeriodoDataHoraInicialAfterAndPeriodoDataHoraFinalBefore(
-                idSolicitante,
-                periodo.getDataHoraInicial(),
-                periodo.getDataHoraFinal(),
-                pageable
-        );
-
-        return reservas;
-    }
-
-    public List<Reserva> listarReservasPorAnunciante(Long idAnunciante, Pageable pageable) {
-        List<Reserva> reservas = reservaRepository.findAllByAnuncioAnuncianteId(idAnunciante, pageable);
-
-        return reservas;
-    }
-
     public void pagarReserva(Long idReserva, FormaPagamento formaPagamento) {
-        Reserva reserva = buscarReservaPorId(idReserva);
+        Reserva reserva = buscarReservaService.buscarReservaPorId(idReserva);
 
         String formasDePagamentoAceitasPeloAnuncio = converterListParaString(reserva.getAnuncio().getFormasAceitas());
 
@@ -145,7 +128,7 @@ public class ReservaService {
     }
 
     public void cancelarReserva(Long idReserva) {
-        Reserva reserva = buscarReservaPorId(idReserva);
+        Reserva reserva = buscarReservaService.buscarReservaPorId(idReserva);
 
         if (reserva.getPagamento().getStatus() != StatusPagamento.PENDENTE)
             throw new PagamentoInvalidoException();
@@ -155,7 +138,7 @@ public class ReservaService {
     }
 
     public void estornarReserva(Long idReserva) {
-        Reserva reserva = buscarReservaPorId(idReserva);
+        Reserva reserva = buscarReservaService.buscarReservaPorId(idReserva);
 
         if (reserva.getPagamento().getStatus() != StatusPagamento.PAGO)
             throw new EstornoInvalidoException();
@@ -163,14 +146,6 @@ public class ReservaService {
         reserva.getPagamento().setStatus(StatusPagamento.ESTORNADO);
         reserva.getPagamento().setFormaEscolhida(null);
         reservaRepository.save(reserva);
-    }
-
-    private Reserva buscarReservaPorId(Long idReserva) {
-        Reserva reserva = reservaRepository.findById(idReserva).orElse(null);
-
-        if (reserva == null)
-            throw new IdReservaNaoEncontradoException(idReserva);
-        return reserva;
     }
 
     private String converterListParaString(List<FormaPagamento> formasAceitas) {

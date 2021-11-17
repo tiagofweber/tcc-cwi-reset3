@@ -3,7 +3,6 @@ package io.github.cwireset.tcc.service.usuario;
 import io.github.cwireset.tcc.domain.Usuario;
 import io.github.cwireset.tcc.repository.UsuarioRepository;
 import io.github.cwireset.tcc.request.UsuarioAvatarRequest;
-import io.github.cwireset.tcc.service.UsuarioAvatarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

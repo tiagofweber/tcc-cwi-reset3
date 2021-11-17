@@ -1,4 +1,4 @@
-package io.github.cwireset.tcc.service;
+package io.github.cwireset.tcc.service.usuario;
 
 import io.github.cwireset.tcc.request.UsuarioAvatarRequest;
 import org.springframework.boot.web.client.RestTemplateBuilder;
