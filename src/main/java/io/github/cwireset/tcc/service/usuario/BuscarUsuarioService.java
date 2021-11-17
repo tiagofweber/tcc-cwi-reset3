@@ -25,7 +25,7 @@ public class BuscarUsuarioService {
         if (!idExists)
             throw new IdUsuarioNaoEncontradoException(id);
 
-        return usuarioRepository.findById(id).get();
+        return usuarioRepository.findByIdEquals(id);
     }
 
     public Usuario buscarUsuarioPorCpf(String cpf) {

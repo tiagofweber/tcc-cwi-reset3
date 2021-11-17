@@ -45,7 +45,7 @@ public class CadastrarUsuarioServiceTest {
     }
 
     @Test
-    public void cadastrarUsuarioComSucesso() {
+    public void criarUsuarioComSucesso() {
         // Arrange
         String linkAvatar = "www.linkavatar.com";
         Usuario usuarioRequest = buildUsuarioRequest();
