@@ -1,11 +1,8 @@
-package io.github.cwireset.tcc.service;
+package io.github.cwireset.tcc.service.usuario;
 
 import io.github.cwireset.tcc.domain.Usuario;
 import io.github.cwireset.tcc.repository.UsuarioRepository;
 import io.github.cwireset.tcc.request.UsuarioAvatarRequest;
-import io.github.cwireset.tcc.service.usuario.CadastrarUsuarioService;
-import io.github.cwireset.tcc.service.usuario.UsuarioAvatarService;
-import io.github.cwireset.tcc.service.usuario.UsuarioService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

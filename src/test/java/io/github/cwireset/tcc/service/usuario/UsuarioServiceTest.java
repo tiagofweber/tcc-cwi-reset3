@@ -1,4 +1,4 @@
-package io.github.cwireset.tcc.service;
+package io.github.cwireset.tcc.service.usuario;
 
 import io.github.cwireset.tcc.exception.usuario.CpfDuplicadoException;
 import io.github.cwireset.tcc.exception.usuario.EmailDuplicadoException;
