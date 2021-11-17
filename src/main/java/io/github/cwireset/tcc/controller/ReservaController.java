@@ -6,6 +6,7 @@ import io.github.cwireset.tcc.domain.Reserva;
 import io.github.cwireset.tcc.request.CadastrarReservaRequest;
 import io.github.cwireset.tcc.response.InformacaoReservaResponse;
 import io.github.cwireset.tcc.service.reserva.BuscarReservaService;
+import io.github.cwireset.tcc.service.reserva.PagamentoReservaService;
 import io.github.cwireset.tcc.service.reserva.ReservaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,6 +28,8 @@ public class ReservaController {
     private ReservaService reservaService;
     @Autowired
     private BuscarReservaService buscarReservaService;
+    @Autowired
+    private PagamentoReservaService pagamentoReservaService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -53,7 +56,7 @@ public class ReservaController {
 
     @PutMapping(path = "/{idReserva}/pagamentos")
     public void pagarReserva(@PathVariable Long idReserva, @RequestBody FormaPagamento formaPagamento) {
-        reservaService.pagarReserva(idReserva, formaPagamento);
+        pagamentoReservaService.pagarReserva(idReserva, formaPagamento);
     }
 
     @PutMapping(path = "/{idReserva}/pagamentos/cancelar")
@@ -63,7 +66,7 @@ public class ReservaController {
 
     @PutMapping(path = "/{idReserva}/pagamentos/estornar")
     public void estornarReserva(@PathVariable Long idReserva) {
-        reservaService.estornarReserva(idReserva);
+        pagamentoReservaService.estornarReserva(idReserva);
     }
 
 }
