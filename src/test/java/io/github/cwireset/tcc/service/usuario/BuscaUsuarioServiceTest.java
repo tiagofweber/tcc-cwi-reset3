@@ -12,21 +12,19 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.time.LocalDate;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith({MockitoExtension.class})
-public class BuscarUsuarioServiceTest {
+public class BuscaUsuarioServiceTest {
 
     @Mock
     private UsuarioRepository repository;
 
     @InjectMocks
-    private BuscarUsuarioService buscarUsuario;
+    private BuscaUsuarioService buscarUsuario;
 
     @Test
     public void listarUsuariosComSucesso() {

@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class CadastrarUsuarioServiceTest {
+public class CadastroUsuarioServiceTest {
 
     @Mock
     private UsuarioRepository usuarioRepository;
@@ -29,7 +29,7 @@ public class CadastrarUsuarioServiceTest {
     private UsuarioAvatarService usuarioAvatarService;
 
     @InjectMocks
-    private CadastrarUsuarioService cadastrarUsuarioService;
+    private CadastroUsuarioService cadastroUsuarioService;
 
     @Captor
     private ArgumentCaptor<Usuario> usuarioArgumentCaptor;
@@ -64,7 +64,7 @@ public class CadastrarUsuarioServiceTest {
         when(usuarioRepository.save(usuarioArgumentCaptor.capture())).thenReturn(expected);
 
         // Action
-        cadastrarUsuarioService.criarUsuario(usuarioRequest);
+        cadastroUsuarioService.criarUsuario(usuarioRequest);
 
         // Assert
         verify(usuarioService, times(1)).validarEmail(anyString());

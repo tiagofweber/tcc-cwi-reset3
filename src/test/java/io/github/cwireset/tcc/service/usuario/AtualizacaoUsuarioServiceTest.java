@@ -19,7 +19,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class AtualizarUsuarioServiceTest {
+public class AtualizacaoUsuarioServiceTest {
 
     @Mock
     private UsuarioRepository repository;
@@ -28,10 +28,10 @@ public class AtualizarUsuarioServiceTest {
     private UsuarioService usuarioService;
 
     @Mock
-    private BuscarUsuarioService buscarUsuarioService;
+    private BuscaUsuarioService buscaUsuarioService;
 
     @InjectMocks
-    private AtualizarUsuarioService atualizarUsuarioService;
+    private AtualizacaoUsuarioService atualizacaoUsuarioService;
 
     @Captor
     ArgumentCaptor<Usuario> usuarioArgumentCaptor;
@@ -79,10 +79,10 @@ public class AtualizarUsuarioServiceTest {
                 "string-avatar.com"
         );
 
-        when(buscarUsuarioService.buscarUsuarioPorId(any())).thenReturn(usuarioCadastrado);
+        when(buscaUsuarioService.buscarUsuarioPorId(any())).thenReturn(usuarioCadastrado);
 
         // Action
-        atualizarUsuarioService.atualizarUsuario(1L, atualizarUsuarioRequest);
+        atualizacaoUsuarioService.atualizarUsuario(1L, atualizarUsuarioRequest);
 
         // Assert
         verify(repository, times(1)).save(usuarioArgumentCaptor.capture());

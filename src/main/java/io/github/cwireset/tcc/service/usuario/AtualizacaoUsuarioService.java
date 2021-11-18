@@ -7,17 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AtualizarUsuarioService {
+public class AtualizacaoUsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
     @Autowired
     private UsuarioService usuarioService;
     @Autowired
-    private BuscarUsuarioService buscarUsuarioService;
+    private BuscaUsuarioService buscaUsuarioService;
 
     public Usuario atualizarUsuario(Long id, AtualizarUsuarioRequest usuarioRequest) {
-        Usuario usuario = buscarUsuarioService.buscarUsuarioPorId(id);
+        Usuario usuario = buscaUsuarioService.buscarUsuarioPorId(id);
 
         if (!usuario.getEmail().equals(usuarioRequest.getEmail()))
             usuarioService.validarEmail(usuarioRequest.getEmail());

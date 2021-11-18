@@ -10,7 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
-public class BuscarUsuarioService {
+public class BuscaUsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;

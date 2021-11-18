@@ -5,7 +5,7 @@ import io.github.cwireset.tcc.domain.Periodo;
 import io.github.cwireset.tcc.domain.Reserva;
 import io.github.cwireset.tcc.request.CadastrarReservaRequest;
 import io.github.cwireset.tcc.response.InformacaoReservaResponse;
-import io.github.cwireset.tcc.service.reserva.BuscarReservaService;
+import io.github.cwireset.tcc.service.reserva.BuscaReservaService;
 import io.github.cwireset.tcc.service.reserva.PagamentoReservaService;
 import io.github.cwireset.tcc.service.reserva.ReservaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class ReservaController {
     @Autowired
     private ReservaService reservaService;
     @Autowired
-    private BuscarReservaService buscarReservaService;
+    private BuscaReservaService buscaReservaService;
     @Autowired
     private PagamentoReservaService pagamentoReservaService;
 
@@ -43,7 +43,7 @@ public class ReservaController {
             @Valid Periodo periodo,
             @PageableDefault(sort = "periodoDataHoraFinal", direction = Sort.Direction.DESC) @ApiIgnore Pageable pageable
             ) {
-        return buscarReservaService.listarReservasPorSolicitante(idSolicitante, periodo, pageable);
+        return buscaReservaService.listarReservasPorSolicitante(idSolicitante, periodo, pageable);
     }
 
     @GetMapping(path = "/anuncios/anunciantes/{idAnunciante}")
@@ -51,7 +51,7 @@ public class ReservaController {
             @PathVariable(value = "idAnunciante") Long idAnunciante,
             @PageableDefault(sort = "periodoDataHoraFinal", direction = Sort.Direction.DESC) @ApiIgnore Pageable pageable
     ) {
-        return buscarReservaService.listarReservasPorAnunciante(idAnunciante, pageable);
+        return buscaReservaService.listarReservasPorAnunciante(idAnunciante, pageable);
     }
 
     @PutMapping(path = "/{idReserva}/pagamentos")

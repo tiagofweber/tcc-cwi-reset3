@@ -7,13 +7,10 @@ import io.github.cwireset.tcc.request.CadastrarReservaRequest;
 import io.github.cwireset.tcc.response.DadosAnuncioResponse;
 import io.github.cwireset.tcc.response.DadosSolicitanteResponse;
 import io.github.cwireset.tcc.response.InformacaoReservaResponse;
-import io.github.cwireset.tcc.service.AnuncioService;
-import io.github.cwireset.tcc.service.usuario.BuscarUsuarioService;
-import io.github.cwireset.tcc.service.usuario.CadastrarUsuarioService;
+import io.github.cwireset.tcc.service.anuncio.AnuncioService;
+import io.github.cwireset.tcc.service.usuario.BuscaUsuarioService;
 import io.github.cwireset.tcc.service.usuario.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -29,14 +26,14 @@ public class ReservaService {
     @Autowired
     private UsuarioService usuarioService;
     @Autowired
-    private BuscarUsuarioService buscarUsuarioService;
+    private BuscaUsuarioService buscaUsuarioService;
     @Autowired
     private AnuncioService anuncioService;
     @Autowired
-    private BuscarReservaService buscarReservaService;
+    private BuscaReservaService buscaReservaService;
 
     public InformacaoReservaResponse realizarReserva(CadastrarReservaRequest reservaRequest) {
-        Usuario solicitante = buscarUsuarioService.buscarUsuarioPorId(reservaRequest.getIdSolicitante());
+        Usuario solicitante = buscaUsuarioService.buscarUsuarioPorId(reservaRequest.getIdSolicitante());
         Anuncio anuncio = anuncioService.buscarAnuncioPorId(reservaRequest.getIdAnuncio());
 
         LocalDate dataInicial = reservaRequest.getPeriodo().getDataHoraInicial().toLocalDate();
@@ -106,7 +103,7 @@ public class ReservaService {
     }
 
     public void cancelarReserva(Long idReserva) {
-        Reserva reserva = buscarReservaService.buscarReservaPorId(idReserva);
+        Reserva reserva = buscaReservaService.buscarReservaPorId(idReserva);
 
         if (reserva.getPagamento().getStatus() != StatusPagamento.PENDENTE)
             throw new PagamentoInvalidoException();

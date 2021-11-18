@@ -18,10 +18,10 @@ public class PagamentoReservaService {
     @Autowired
     private ReservaRepository reservaRepository;
     @Autowired
-    private BuscarReservaService buscarReservaService;
+    private BuscaReservaService buscaReservaService;
 
     public void pagarReserva(Long idReserva, FormaPagamento formaPagamento) {
-        Reserva reserva = buscarReservaService.buscarReservaPorId(idReserva);
+        Reserva reserva = buscaReservaService.buscarReservaPorId(idReserva);
 
         String formasDePagamentoAceitasPeloAnuncio = converterListParaString(reserva.getAnuncio().getFormasAceitas());
 
@@ -39,7 +39,7 @@ public class PagamentoReservaService {
     }
 
     public void estornarReserva(Long idReserva) {
-        Reserva reserva = buscarReservaService.buscarReservaPorId(idReserva);
+        Reserva reserva = buscaReservaService.buscarReservaPorId(idReserva);
 
         if (reserva.getPagamento().getStatus() != StatusPagamento.PAGO)
             throw new EstornoInvalidoException();

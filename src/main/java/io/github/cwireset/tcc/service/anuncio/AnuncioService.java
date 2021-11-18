@@ -1,4 +1,4 @@
-package io.github.cwireset.tcc.service;
+package io.github.cwireset.tcc.service.anuncio;
 
 import io.github.cwireset.tcc.domain.Anuncio;
 import io.github.cwireset.tcc.domain.Imovel;
@@ -8,8 +8,9 @@ import io.github.cwireset.tcc.exception.imovel.ImovelJaAnunciadoException;
 import io.github.cwireset.tcc.repository.AnuncioRepository;
 import io.github.cwireset.tcc.request.CadastrarAnuncioRequest;
 import io.github.cwireset.tcc.response.DadosAnuncioResponse;
-import io.github.cwireset.tcc.service.usuario.BuscarUsuarioService;
-import io.github.cwireset.tcc.service.usuario.CadastrarUsuarioService;
+import io.github.cwireset.tcc.service.imovel.BuscaImovelService;
+import io.github.cwireset.tcc.service.imovel.CadastroImovelService;
+import io.github.cwireset.tcc.service.usuario.BuscaUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,9 +22,11 @@ public class AnuncioService {
     @Autowired
     private AnuncioRepository anuncioRepository;
     @Autowired
-    private BuscarUsuarioService buscarUsuarioService;
+    private BuscaUsuarioService buscaUsuarioService;
     @Autowired
-    private ImovelService imovelService;
+    private CadastroImovelService cadastroImovelService;
+    @Autowired
+    private BuscaImovelService buscaImovelService;
 
     public Anuncio cadastrarAnuncio(CadastrarAnuncioRequest anuncioRequest) {
         boolean anuncioImovelExists = anuncioRepository.existsByImovelId(anuncioRequest.getIdImovel());
@@ -31,8 +34,8 @@ public class AnuncioService {
         if (anuncioImovelExists)
             throw new ImovelJaAnunciadoException(anuncioRequest.getIdImovel());
 
-        Imovel imovel = imovelService.buscarImovelPorId(anuncioRequest.getIdImovel());
-        Usuario anunciante = buscarUsuarioService.buscarUsuarioPorId(anuncioRequest.getIdAnunciante());
+        Imovel imovel = buscaImovelService.buscarImovelPorId(anuncioRequest.getIdImovel());
+        Usuario anunciante = buscaUsuarioService.buscarUsuarioPorId(anuncioRequest.getIdAnunciante());
 
         Anuncio anuncio = new Anuncio(
                 anuncioRequest.getTipoAnuncio(),
@@ -82,8 +85,8 @@ public class AnuncioService {
 
     public DadosAnuncioResponse criarAnuncioResponse(Long idAnuncio) {
         Anuncio anuncio = buscarAnuncioPorId(idAnuncio);
-        Imovel imovel = imovelService.buscarImovelPorId(anuncio.getImovel().getId());
-        Usuario anunciante = buscarUsuarioService.buscarUsuarioPorId(anuncio.getAnunciante().getId());
+        Imovel imovel = buscaImovelService.buscarImovelPorId(anuncio.getImovel().getId());
+        Usuario anunciante = buscaUsuarioService.buscarUsuarioPorId(anuncio.getAnunciante().getId());
 
         return new DadosAnuncioResponse(
                 idAnuncio,

@@ -14,7 +14,7 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
     @Autowired
-    private BuscarUsuarioService buscarUsuarioService;
+    private BuscaUsuarioService buscaUsuarioService;
 
     public void validarCpf(String cpf) {
         if (cpfExists(cpf))
@@ -35,7 +35,7 @@ public class UsuarioService {
     }
 
     public DadosSolicitanteResponse criarSolicitanteResponse(Long idSolicitante) {
-        Usuario usuario = buscarUsuarioService.buscarUsuarioPorId(idSolicitante);
+        Usuario usuario = buscaUsuarioService.buscarUsuarioPorId(idSolicitante);
         return new DadosSolicitanteResponse(idSolicitante, usuario.getNome());
     }
 }

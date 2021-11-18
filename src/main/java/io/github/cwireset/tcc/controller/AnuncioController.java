@@ -2,7 +2,7 @@ package io.github.cwireset.tcc.controller;
 
 import io.github.cwireset.tcc.domain.Anuncio;
 import io.github.cwireset.tcc.request.CadastrarAnuncioRequest;
-import io.github.cwireset.tcc.service.AnuncioService;
+import io.github.cwireset.tcc.service.anuncio.AnuncioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

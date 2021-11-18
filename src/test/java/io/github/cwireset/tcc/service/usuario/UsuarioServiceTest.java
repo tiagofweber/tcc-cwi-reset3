@@ -3,8 +3,6 @@ package io.github.cwireset.tcc.service.usuario;
 import io.github.cwireset.tcc.exception.usuario.CpfDuplicadoException;
 import io.github.cwireset.tcc.exception.usuario.EmailDuplicadoException;
 import io.github.cwireset.tcc.repository.UsuarioRepository;
-import io.github.cwireset.tcc.service.usuario.BuscarUsuarioService;
-import io.github.cwireset.tcc.service.usuario.UsuarioService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -22,7 +20,7 @@ public class UsuarioServiceTest {
     private UsuarioRepository usuarioRepository;
 
     @Mock
-    private BuscarUsuarioService buscarUsuarioService;
+    private BuscaUsuarioService buscaUsuarioService;
 
     @InjectMocks
     private UsuarioService usuarioService;

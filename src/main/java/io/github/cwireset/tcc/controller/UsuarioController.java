@@ -2,9 +2,9 @@ package io.github.cwireset.tcc.controller;
 
 import io.github.cwireset.tcc.domain.Usuario;
 import io.github.cwireset.tcc.request.AtualizarUsuarioRequest;
-import io.github.cwireset.tcc.service.usuario.AtualizarUsuarioService;
-import io.github.cwireset.tcc.service.usuario.BuscarUsuarioService;
-import io.github.cwireset.tcc.service.usuario.CadastrarUsuarioService;
+import io.github.cwireset.tcc.service.usuario.AtualizacaoUsuarioService;
+import io.github.cwireset.tcc.service.usuario.BuscaUsuarioService;
+import io.github.cwireset.tcc.service.usuario.CadastroUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,31 +20,31 @@ import javax.validation.Valid;
 public class UsuarioController {
 
     @Autowired
-    private CadastrarUsuarioService cadastrarUsuarioService;
+    private CadastroUsuarioService cadastroUsuarioService;
     @Autowired
-    private AtualizarUsuarioService atualizarUsuarioService;
+    private AtualizacaoUsuarioService atualizacaoUsuarioService;
     @Autowired
-    private BuscarUsuarioService buscarUsuarioService;
+    private BuscaUsuarioService buscaUsuarioService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Usuario criarUsuario(@RequestBody @Valid Usuario usuario) {
-        return cadastrarUsuarioService.criarUsuario(usuario);
+        return cadastroUsuarioService.criarUsuario(usuario);
     }
 
     @GetMapping
     public Page<Usuario> listarUsuarios(@PageableDefault(sort = "nome") @ApiIgnore Pageable pageable) {
-        return buscarUsuarioService.listarUsuarios(pageable);
+        return buscaUsuarioService.listarUsuarios(pageable);
     }
 
     @GetMapping(path = "/{idUsuario}")
     public Usuario buscarUsuarioPorId(@PathVariable("idUsuario") Long id) {
-        return buscarUsuarioService.buscarUsuarioPorId(id);
+        return buscaUsuarioService.buscarUsuarioPorId(id);
     }
 
     @GetMapping(path = "/cpf/{cpf}")
     public Usuario buscarUsuarioPorCpf(@PathVariable("cpf") String cpf) {
-        return buscarUsuarioService.buscarUsuarioPorCpf(cpf);
+        return buscaUsuarioService.buscarUsuarioPorCpf(cpf);
     }
 
     @PutMapping(path = "/{id}")
@@ -52,6 +52,6 @@ public class UsuarioController {
             @PathVariable Long id,
             @RequestBody @Valid AtualizarUsuarioRequest usuarioRequest
     ) {
-        return atualizarUsuarioService.atualizarUsuario(id, usuarioRequest);
+        return atualizacaoUsuarioService.atualizarUsuario(id, usuarioRequest);
     }
 }
