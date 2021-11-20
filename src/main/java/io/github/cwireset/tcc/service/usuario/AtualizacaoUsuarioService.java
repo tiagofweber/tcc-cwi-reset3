@@ -1,5 +1,6 @@
 package io.github.cwireset.tcc.service.usuario;
 
+import io.github.cwireset.tcc.domain.Endereco;
 import io.github.cwireset.tcc.domain.Usuario;
 import io.github.cwireset.tcc.repository.UsuarioRepository;
 import io.github.cwireset.tcc.request.AtualizarUsuarioRequest;
@@ -27,14 +28,27 @@ public class AtualizacaoUsuarioService {
         usuario.setSenha(usuarioRequest.getSenha());
         usuario.setDataNascimento(usuarioRequest.getDataNascimento());
 
-        if (usuario.getEndereco() != null) {
-            usuario.getEndereco().setCep(usuarioRequest.getEndereco().getCep());
-            usuario.getEndereco().setLogradouro(usuarioRequest.getEndereco().getLogradouro());
-            usuario.getEndereco().setNumero(usuarioRequest.getEndereco().getNumero());
-            usuario.getEndereco().setComplemento(usuarioRequest.getEndereco().getComplemento());
-            usuario.getEndereco().setBairro(usuarioRequest.getEndereco().getBairro());
-            usuario.getEndereco().setCidade(usuarioRequest.getEndereco().getCidade());
-            usuario.getEndereco().setEstado(usuarioRequest.getEndereco().getEstado());
+        if (usuarioRequest.getEndereco() != null) {
+            if (usuario.getEndereco() != null) {
+                usuario.getEndereco().setCep(usuarioRequest.getEndereco().getCep());
+                usuario.getEndereco().setLogradouro(usuarioRequest.getEndereco().getLogradouro());
+                usuario.getEndereco().setNumero(usuarioRequest.getEndereco().getNumero());
+                usuario.getEndereco().setComplemento(usuarioRequest.getEndereco().getComplemento());
+                usuario.getEndereco().setBairro(usuarioRequest.getEndereco().getBairro());
+                usuario.getEndereco().setCidade(usuarioRequest.getEndereco().getCidade());
+                usuario.getEndereco().setEstado(usuarioRequest.getEndereco().getEstado());
+            } else {
+                Endereco endereco = new Endereco(
+                        usuarioRequest.getEndereco().getCep(),
+                        usuarioRequest.getEndereco().getLogradouro(),
+                        usuarioRequest.getEndereco().getNumero(),
+                        usuarioRequest.getEndereco().getComplemento(),
+                        usuarioRequest.getEndereco().getBairro(),
+                        usuarioRequest.getEndereco().getCidade(),
+                        usuarioRequest.getEndereco().getEstado()
+                );
+                usuario.setEndereco(endereco);
+            }
         }
 
         return usuarioRepository.save(usuario);

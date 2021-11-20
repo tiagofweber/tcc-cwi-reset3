@@ -18,6 +18,16 @@ import javax.validation.constraints.Pattern;
 @Builder
 public class Endereco {
 
+    public Endereco(String cep, String logradouro, String numero, String complemento, String bairro, String cidade, String estado) {
+        this.cep = cep;
+        this.logradouro = logradouro;
+        this.numero = numero;
+        this.complemento = complemento;
+        this.bairro = bairro;
+        this.cidade = cidade;
+        this.estado = estado;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
