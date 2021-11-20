@@ -26,13 +26,16 @@ public class AtualizacaoUsuarioService {
         usuario.setEmail(usuarioRequest.getEmail());
         usuario.setSenha(usuarioRequest.getSenha());
         usuario.setDataNascimento(usuarioRequest.getDataNascimento());
-        usuario.getEndereco().setCep(usuarioRequest.getEndereco().getCep());
-        usuario.getEndereco().setLogradouro(usuarioRequest.getEndereco().getLogradouro());
-        usuario.getEndereco().setNumero(usuarioRequest.getEndereco().getNumero());
-        usuario.getEndereco().setComplemento(usuarioRequest.getEndereco().getComplemento());
-        usuario.getEndereco().setBairro(usuarioRequest.getEndereco().getBairro());
-        usuario.getEndereco().setCidade(usuarioRequest.getEndereco().getCidade());
-        usuario.getEndereco().setEstado(usuarioRequest.getEndereco().getEstado());
+
+        if (usuario.getEndereco() != null) {
+            usuario.getEndereco().setCep(usuarioRequest.getEndereco().getCep());
+            usuario.getEndereco().setLogradouro(usuarioRequest.getEndereco().getLogradouro());
+            usuario.getEndereco().setNumero(usuarioRequest.getEndereco().getNumero());
+            usuario.getEndereco().setComplemento(usuarioRequest.getEndereco().getComplemento());
+            usuario.getEndereco().setBairro(usuarioRequest.getEndereco().getBairro());
+            usuario.getEndereco().setCidade(usuarioRequest.getEndereco().getCidade());
+            usuario.getEndereco().setEstado(usuarioRequest.getEndereco().getEstado());
+        }
 
         return usuarioRepository.save(usuario);
     }

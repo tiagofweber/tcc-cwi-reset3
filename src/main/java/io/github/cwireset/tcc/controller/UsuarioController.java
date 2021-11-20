@@ -49,7 +49,7 @@ public class UsuarioController {
 
     @PutMapping(path = "/{id}")
     public Usuario atualizarUsuario(
-            @PathVariable Long id,
+            @PathVariable(name = "id") Long id,
             @RequestBody @Valid AtualizarUsuarioRequest usuarioRequest
     ) {
         return atualizacaoUsuarioService.atualizarUsuario(id, usuarioRequest);
