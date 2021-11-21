@@ -38,7 +38,7 @@ public class BuscaReservaService {
         );
     }
 
-    public List<Reserva> listarReservasPorAnunciante(Long idAnunciante, Pageable pageable) {
+    public Page<Reserva> listarReservasPorAnunciante(Long idAnunciante, Pageable pageable) {
         return reservaRepository.findAllByAnuncioAnuncianteId(idAnunciante, pageable);
     }
 

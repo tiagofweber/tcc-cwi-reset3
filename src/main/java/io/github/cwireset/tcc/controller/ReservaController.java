@@ -47,7 +47,7 @@ public class ReservaController {
     }
 
     @GetMapping(path = "/anuncios/anunciantes/{idAnunciante}")
-    public List<Reserva> listarReservasPorAnunciante(
+    public Page<Reserva> listarReservasPorAnunciante(
             @PathVariable(value = "idAnunciante") Long idAnunciante,
             @PageableDefault(sort = "periodoDataHoraFinal", direction = Sort.Direction.DESC) @ApiIgnore Pageable pageable
     ) {
