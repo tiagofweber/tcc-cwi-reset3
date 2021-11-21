@@ -106,7 +106,7 @@ public class ReservaService {
         Reserva reserva = buscaReservaService.buscarReservaPorId(idReserva);
 
         if (reserva.getPagamento().getStatus() != StatusPagamento.PENDENTE)
-            throw new PagamentoInvalidoException();
+            throw new CancelamentoInvalidoException();
 
         reserva.getPagamento().setStatus(StatusPagamento.CANCELADO);
         reservaRepository.save(reserva);
