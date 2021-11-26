@@ -4,6 +4,7 @@ import io.github.cwireset.tcc.domain.CaracteristicaImovel;
 import io.github.cwireset.tcc.domain.Endereco;
 import io.github.cwireset.tcc.domain.TipoImovel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,6 +16,7 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
+@Builder
 public class CadastrarImovelRequest {
 
     @NotNull(message = "Campo obrigatório não informado. Por favor, informe o campo tipo imóvel.")

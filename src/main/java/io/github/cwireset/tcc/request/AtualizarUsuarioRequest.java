@@ -2,6 +2,7 @@ package io.github.cwireset.tcc.request;
 
 import io.github.cwireset.tcc.domain.Endereco;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @AllArgsConstructor
+@Builder
 public class AtualizarUsuarioRequest {
 
     @NotBlank(message = "Campo obrigatório não informado. Por favor, informe o campo nome.")

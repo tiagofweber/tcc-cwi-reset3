@@ -2,6 +2,7 @@ package io.github.cwireset.tcc.request;
 
 import io.github.cwireset.tcc.domain.Periodo;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +12,7 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 @AllArgsConstructor
+@Builder
 public class CadastrarReservaRequest {
 
     @NotNull(message = "Campo obrigatório não informado. Por favor, informe o campo id do solicitante.")
